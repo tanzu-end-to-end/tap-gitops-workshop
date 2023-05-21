@@ -1,0 +1,42 @@
+#@data/values-schema
+---
+#@schema/title "Tanzu Sync Secrets"
+secrets:
+  #@schema/title "ESO Secrets"
+  eso:
+    #@schema/title "ESO Provider configuration for AWS"
+    aws:
+      #@schema/desc "AWS region which hosts the Secrets Manager instance hosting Tanzu Sync secrets."
+      #@schema/validation min_len=1
+      region: ""
+      #@schema/title "ServiceAccount"
+      #@schema/desc "Configuration for Kubernetes ServiceAccount which can assume an IAM Role that can fetch Tanzu Sync secrets from AWS Secrets Manager."
+      tanzu_sync_secrets:
+        #@schema/title "IAM Role ARN"
+        #@schema/desc "Amazon Resource Name for the Identity and Access Management Role for which IRSA has been configured."
+        #@schema/validation min_len=1
+        role_arn: ""
+
+    #@schema/title "ESO External Secrets Remote References"
+    #@schema/desc "Collection of ESO remote references (i.e. ExternalSecret data[].remoteRef) describing the location and disposition of sensitive data."
+    remote_refs:
+
+      #@schema/title "sync-git-ssh Secret"
+      #@schema/desc "Mapping of Secret key-to-ESO remote references of sensitive data used to authenticate with the git repository that is the source of truth for this Tanzu Sync (i.e. the 'sync-git-ssh' Secret)."
+      sync_git_ssh:
+        #@schema/desc "ESO remote reference of the private portion of account SSH key or deploy token."
+        #@schema/type any=True
+        #@schema/examples ("AWS Secrets Manager (default scheme)", { "key": "dev/tanzu-sync/sync-git-ssh", "property": "ssh-privatekey" })
+        ssh_private_key: {}
+        #@schema/desc "ESO remote reference of the known hosts entries used to authenticate the remote host."
+        #@schema/type any=True
+        #@schema/examples ("AWS Secrets Manager (default scheme)", { "key": "dev/tanzu-sync/sync-git-ssh", "property": "ssh-knownhosts" })
+        ssh_known_hosts: {}
+
+      #@schema/title "install-registry-dockerconfig Secret"
+      #@schema/desc "Mapping of Secret key-to-ESO remote references of sensitive data used to authenticate with the OCI registry hosting the TAP PackageRepository (i.e. the 'install-registry-dockerconfig' Secret)."
+      install_registry_dockerconfig:
+        #@schema/desc "ESO remote reference of Docker configuration JSON-formatted authentication for the OCI registry."
+        #@schema/type any=True
+        #@schema/examples ("AWS Secrets Manager (default scheme)", { "key": "dev/tanzu-sync/install-registry-dockerconfig" } )
+        dockerconfigjson: {}

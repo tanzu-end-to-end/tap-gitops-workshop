@@ -1,0 +1,21 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@ def tanzu_sync_app():
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: sync
+  namespace: tanzu-sync
+#@ end
+
+#! As a first step, decrypt all SOPS-encrypted files.
+#@overlay/match by=overlay.subset(tanzu_sync_app())
+---
+spec:
+  template:
+    #@overlay/match by=overlay.index(0)
+    #@overlay/insert before=True
+    - sops: 
+        age:
+          privateKeysSecretRef:
+            name: sync-age-identity

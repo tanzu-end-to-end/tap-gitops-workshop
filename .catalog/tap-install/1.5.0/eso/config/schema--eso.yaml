@@ -1,0 +1,30 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+tap_install:
+  #@schema/title "TAP installation Secrets"
+  secrets:
+    #@schema/title "ESO Secrets"
+    eso:
+      #@schema/title "ESO Provider configuration for AWS"
+      aws:
+        #@schema/desc "AWS region which hosts the Secrets Manager instance hosting Tanzu Sync secrets."
+        #@schema/validation min_len=1
+        region: ""
+        #@schema/title "ServiceAccount"
+        #@schema/desc "Configuration for Kubernetes ServiceAccount which can assume an IAM Role that can fetch TAP installation secrets from AWS Secrets Manager."
+        tap_install_secrets:
+          #@schema/title "IAM Role ARN"
+          #@schema/desc "Amazon Resource Name for the Identity and Access Management Role for which IRSA has been configured."
+          #@schema/validation min_len=1
+          role_arn: ""
+
+      #@schema/title "ESO External Secrets Remote References"
+      #@schema/desc "Collection of ESO remote references (i.e. ExternalSecret data[].remoteRef) describing the location and disposition of sensitive data."
+      remote_refs:
+        #@schema/title "TAP Values (sensitive)"
+        #@schema/desc "Mapping of Secret key-to-ESO remote reference to the sensitive portion of the Tanzu Application Platform configuration values."
+        tap_sensitive_values:
+          #@schema/examples ("AWS Secrets Manager", { "key": "dev/tap/sensitive-values.yaml" })
+          #@schema/type any=True
+          sensitive_tap_values_yaml: {}

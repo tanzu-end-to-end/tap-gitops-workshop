@@ -1,0 +1,41 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+#@schema/title "Tanzu Sync version"
+#@schema/desc "(internal use: DO NOT MODIFY OR OVERRIDE)"
+version: ""
+
+#@schema/title "Source git repository"
+#@schema/desc "Coordinates to the hosted git repository containing the source of truth for the cluster."
+git:
+  #@schema/title "Repository URL"
+  #@schema/desc "Fully qualified URL to hosted/remote clone of repository"
+  #@schema/validation min_len=1
+  url: ""
+  #@schema/title "Current git reference"
+  #@schema/desc "Branch (or other commit ref) of the version to sync"
+  #@schema/validation min_len=1
+  ref: ""
+  #@schema/title "cluster configuration filepath"
+  #@schema/desc "Filesystem path, relative to the root of the repository, of where this clusters configuration is stored."
+  #@schema/examples ("Cluster is named 'iterate-green'.", "cluster-config/iterate-green/config")
+  #@schema/validation min_len=1
+  sub_path: ""
+
+#@schema/title "TAP PackageRepository"
+tap_package_repository:
+  #@schema/title "Repository URL"
+  #@schema/desc "Fully qualified URL (including repository) where the TAP PackageRepository is hosted."
+  oci_repository: ""
+
+#@schema/title "TAP Installation Configuration"
+#@schema/desc "Details from TAP Installation required by Tanzu Sync to ensure compatible configuration. Primarily to install Packages from the same PackageRepository used to install TAP."
+tap_install:
+  #@schema/title "TAP Version"
+  version:
+    #@schema/title "PackageRepository OCI Tag"
+    #@schema/desc "Version or SHA-256 digest of TAP PackageRepository being installed."
+    package_repo_bundle_tag: ""
+    #@schema/title "Carvel Package Version"
+    #@schema/desc "Version of the tap.tanzu.vmware.com Package being installed."
+    package_version: ""

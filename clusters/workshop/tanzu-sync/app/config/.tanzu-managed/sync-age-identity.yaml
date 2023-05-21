@@ -1,0 +1,11 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sync-age-identity
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tanzu-sync-secrets
+stringData:
+  key.txt: #@ data.values.secrets.sops.age_key

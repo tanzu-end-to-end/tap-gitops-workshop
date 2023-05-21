@@ -1,0 +1,13 @@
+#! version.yaml
+#! WARNING: do *not* modify the values in this file.
+#! To upgrade to another version of TAP, add that value to your Tanzu Sync config.
+#! 
+
+#@data/values
+---
+#@overlay/match missing_ok=True
+tap_install:
+  version:
+    package_repo_bundle_tag: "1.5.0"
+    package_version: "1.5.0"
+

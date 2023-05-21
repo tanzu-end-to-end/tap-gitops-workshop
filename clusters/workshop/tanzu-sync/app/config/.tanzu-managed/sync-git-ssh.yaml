@@ -1,0 +1,14 @@
+#@ load("@ytt:base64", "base64")
+#@ load("@ytt:data", "data")
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sync-git-ssh
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tanzu-sync-secrets
+type: kubernetes.io/ssh-auth
+data:
+  ssh-privatekey: #@ base64.encode(data.values.secrets.sops.git.ssh.private_key)
+  ssh-knownhosts: #@ base64.encode(data.values.secrets.sops.git.ssh.known_hosts)

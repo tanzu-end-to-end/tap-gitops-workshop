@@ -1,0 +1,32 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:base64", "base64")
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: sync
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tanzu-sync
+    kapp.k14s.io/change-rule.0: "upsert after upserting tanzu-sync-secrets"
+    kapp.k14s.io/change-rule.1: "upsert after upserting install-registry-export"
+    #! if registry credentials are deleted before sync-managed software is removed, uninstall can be slow or fail.
+    kapp.k14s.io/change-rule.2: "delete before deleting tanzu-sync-secrets"
+    kapp.k14s.io/change-rule.3: "delete before deleting install-registry-export"
+spec:
+  serviceAccountName: sync-sa
+  fetch:
+    - git:
+        url: #@ data.values.git.url
+        ref: #@ data.values.git.ref
+        secretRef:
+          name: sync-git-ssh
+        subPath: #@ data.values.git.sub_path
+  template:
+    - ytt:
+        paths: 
+        - config
+        valuesFrom:
+        - path: values
+  deploy:
+    - kapp: {}

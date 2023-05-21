@@ -1,0 +1,37 @@
+#@ load("validations.star", "valid")
+
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+#@schema/title "Tanzu Sync Secrets"
+secrets:
+  #@schema/title "SoPS Secrets"
+  sops:
+    #@schema/title "Age Identity"
+    #@schema/desc "Age identity/key containing one or more 'recipient'(s) of which at least one must have been named when encrypting sensitive data for this installation."
+    #@schema/validation valid.age_key()
+    age_key: ""
+
+    #@schema/title "TAP OCI Registry"
+    #@schema/desc "Connection information and credentials for the OCI registry hosting TAP PackageRepository."
+    registry:
+      #@schema/desc "Fully-qualified hostname of OCI registry."
+      #@schema/validation min_len=1
+      hostname: ""
+      #@schema/desc "Username of registry account that has at least read access to the OCI repository containing the TAP PackageRepository."
+      #@schema/validation min_len=1
+      username: ""
+      #@schema/desc "Credential for named registry account."
+      #@schema/validation min_len=1
+      password: ""
+
+    #@schema/title "Source git repository credentials"
+    #@schema/desc "Credentials to the hosted git repository containing the source of truth for the cluster."
+    git:
+      ssh:
+        #@schema/desc "Private portion of account SSH key or deploy token."
+        #@schema/validation min_len=1
+        private_key: ""
+        #@schema/desc "Known hosts entries required to authenticate the remote git repository host."
+        #@schema/validation min_len=1
+        known_hosts: ""
