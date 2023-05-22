@@ -2,6 +2,8 @@
 tap_install:
   values:
     profile: run
+    excluded_packages:
+      - eventing.tanzu.vmware.com
     ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
 
     shared:
