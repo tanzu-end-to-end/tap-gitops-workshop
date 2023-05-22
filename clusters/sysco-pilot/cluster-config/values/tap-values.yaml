@@ -5,7 +5,7 @@ tap_install:
     ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
 
     shared:
-      ingress_domain: sysco.tap-pilot.net
+      ingress_domain: sysco.tap-pilot.com
       image_registry:
         project_path: "gcr.io/my-project/tap"
 
