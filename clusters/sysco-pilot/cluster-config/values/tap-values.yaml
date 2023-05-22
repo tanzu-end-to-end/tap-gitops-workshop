@@ -6,8 +6,9 @@ tap_install:
 
     shared:
       ingress_domain: sysco.tap-pilot.com
+      ingress_issuer: ""
       image_registry:
-        project_path: "gcr.io/my-project/tap"
+        project_path: "gcr.io/fe-cpage/tap"
 
     supply_chain: basic
 
@@ -20,3 +21,7 @@ tap_install:
       backend:
         ingressEnabled: true
         host: appliveview.tap.corby.page
+
+    cnrs:
+      default_tls_secret: contour-tls/tls
+      domain_template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
