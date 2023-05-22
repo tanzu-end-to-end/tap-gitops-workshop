@@ -1,0 +1,10 @@
+#@ load("@ytt:data", "data")
+#! This loop will now loop over the namespace list in
+#! in ns.yaml and will create those namespaces.
+#@ for ns in data.values.namespaces:
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ ns.name
+#@ end

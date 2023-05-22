@@ -25,3 +25,20 @@ tap_install:
     cnrs:
       default_tls_secret: contour-tls/tls
       domain_template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
+
+    namespace_provisioner:
+      controller: false
+      gitops_install:
+        ref: origin/main
+        subPath: clusters/sysco-pilot/cluster-config/namespace-provisioner/namespaces
+        url: https://github.com/tanzu-end-to-end/tap-gitops-workshop
+      additional_sources:
+        - git:
+            ref: origin/main
+            subPath: clusters/sysco-pilot/cluster-config/namespace-provisioner/namespace-resources
+            url: https://github.com/tanzu-end-to-end/tap-gitops-workshop
+          path: _ytt_lib/namespace-resources
+      overlay_secrets:
+        - name: workload-git-auth-overlay
+          namespace: tap-install
+          create_export: true
