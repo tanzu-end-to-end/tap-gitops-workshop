@@ -1,0 +1,22 @@
+---
+tap_install:
+  values:
+    profile: run
+    ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
+
+    shared:
+      ingress_domain: sysco.tap-pilot.net
+      image_registry:
+        project_path: "gcr.io/my-project/tap"
+
+    supply_chain: basic
+
+    contour:
+      envoy:
+        service:
+          type: LoadBalancer # NodePort can be used if your Kubernetes cluster doesn't support LoadBalancing.
+
+    appliveview_connector:
+      backend:
+        ingressEnabled: true
+        host: appliveview.tap.corby.page
