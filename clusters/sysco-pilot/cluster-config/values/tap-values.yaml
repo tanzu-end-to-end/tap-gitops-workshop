@@ -1,9 +1,11 @@
 ---
 tap_install:
   values:
-    profile: run
+    profile: full
     excluded_packages:
       - eventing.tanzu.vmware.com
+      - learningcenter.tanzu.vmware.com
+      - workshops.learningcenter.tanzu.vmware.com
     ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
 
     shared:
@@ -12,6 +14,9 @@ tap_install:
       image_registry:
         project_path: "gcr.io/fe-cpage/tap"
 
+    buildservice:
+      kp_default_repository: "gcr.io/fe-cpage/build"
+
     supply_chain: basic
 
     contour:
@@ -19,10 +24,16 @@ tap_install:
         service:
           type: LoadBalancer # NodePort can be used if your Kubernetes cluster doesn't support LoadBalancing.
 
+    appliveview:
+      ingressEnabled: true
+      tls:
+        namespace: contour-tls
+        secretName: tls
+
     appliveview_connector:
       backend:
         ingressEnabled: true
-        host: appliveview.tap.corby.page
+        host: appliveview.sysco.tap-pilot.com
 
     cnrs:
       default_tls_secret: contour-tls/tls
@@ -44,3 +55,11 @@ tap_install:
         - name: workload-git-auth-overlay
           namespace: tap-install
           create_export: true
+
+    tap_gui:
+      service_type: ClusterIP
+      metadataStoreAutoconfiguration: true
+      ingressEnabled: "true"
+      tls:
+        namespace: contour-tls
+        secretName: tls
