@@ -11,7 +11,7 @@ spec:
     - git:
         ref: origin/main
         url: https://github.com/tanzu-end-to-end/tap-gitops-workshop
-        subPath: clusters/aks-tap-build/cluster-config/dependent-resources
+        subPath: clusters/sysco-pilot/cluster-config/dependent-resources
   template:
     - sops:
         age:
