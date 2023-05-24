@@ -17,7 +17,18 @@ tap_install:
     buildservice:
       kp_default_repository: "gcr.io/fe-cpage/build"
 
-    supply_chain: basic
+    supply_chain: testing_scanning
+
+    ootb_supply_chain_testing_scanning:
+      registry:
+        server: "gcr.io/fe-cpage"
+        repository: "tap/supply-chain"
+      gitops:
+        ssh_secret: git-https
+        username: cpage-pivotal
+        branch: main
+        commit_message: "Update from TAP Supply Chain Choreographer"
+        email: pcorby@vmware.com
 
     contour:
       envoy:
@@ -63,3 +74,27 @@ tap_install:
       tls:
         namespace: contour-tls
         secretName: tls
+      app_config:
+        app:
+          baseUrl: https://tap-gui.sysco.tap-pilot.com
+        catalog:
+          locations:
+            - type: url
+              target: https://github.com/cpage-pivotal/spring-sensors/blob/main/catalog/catalog-info.yaml
+            - type: url
+        backend:
+          baseUrl: https://tap-gui.tap.corby.page
+          cors:
+            origin: https://tap-gui.tap.corby.page
+
+    metadata_store:
+      app_service_type: ClusterIP # (optional) Defaults to LoadBalancer. Change to NodePort for distributions that don't support LoadBalancer
+      ns_for_export_app_cert: "*"
+
+    scanning:
+      metadataStore:
+        url: "" # Disable embedded integration since it's deprecated
+
+    grype:
+      namespace: "default" # (optional) Defaults to default namespace.
+      targetImagePullSecret: "registry-credentials"

@@ -6,6 +6,7 @@ metadata:
   labels:
     apps.tanzu.vmware.com/workload-type: web
     app.kubernetes.io/part-of: spring-sensors
+    apps.tanzu.vmware.com/scanning: "true"
 spec:
   build:
     env:
@@ -20,3 +21,9 @@ spec:
     - name: annotations
       value:
         autoscaling.knative.dev/minScale: "1"
+    - name: gitops_server_address
+      value: https://github.com/
+    - name: gitops_repository_owner
+      value: cpage-pivotal
+    - name: gitops_repository_name
+      value: tap-gitops
