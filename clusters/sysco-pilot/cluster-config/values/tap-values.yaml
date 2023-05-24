@@ -81,7 +81,6 @@ tap_install:
           locations:
             - type: url
               target: https://github.com/cpage-pivotal/spring-sensors/blob/main/catalog/catalog-info.yaml
-            - type: url
         backend:
           baseUrl: https://tap-gui.tap.corby.page
           cors:
