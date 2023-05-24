@@ -14,7 +14,7 @@ spec:
         value: "17"
   source:
     git:
-      url: https://github.com/paketo-buildpacks/samples
+      url: https://github.com/cpage-pivotal/aspnet
       subPath: dotnet-core/aspnet
       ref:
         branch: main
