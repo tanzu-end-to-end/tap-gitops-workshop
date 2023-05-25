@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: alcon-apps
+  description: Alcon Applications
+  tags:
+    - app-accelerator
+    - web
+    - tanzu
+  annotations:
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=alcon-apps'
+spec:
+  type: service
+  lifecycle: experimental
+  owner: default-team
