@@ -82,9 +82,9 @@ tap_install:
             - type: url
               target: https://github.com/cpage-pivotal/spring-sensors/blob/main/catalog/catalog-info.yaml
         backend:
-          baseUrl: https://tap-gui.tap.corby.page
+          baseUrl: https://tap-gui.sysco.tap-pilot.com
           cors:
-            origin: https://tap-gui.tap.corby.page
+            origin: https://tap-gui.sysco.tap-pilot.com
 
     metadata_store:
       app_service_type: ClusterIP # (optional) Defaults to LoadBalancer. Change to NodePort for distributions that don't support LoadBalancer
