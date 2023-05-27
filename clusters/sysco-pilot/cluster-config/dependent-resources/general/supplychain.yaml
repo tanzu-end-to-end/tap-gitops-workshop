@@ -4,161 +4,167 @@ metadata:
   name: source-scan-to-url
 spec:
   params:
-  - name: maven_repository_url
-    value: https://repo.maven.apache.org/maven2
-  - default: main
-    name: gitops_branch
-  - default: cpage-pivotal
-    name: gitops_user_name
-  - default: pcorby@vmware.com
-    name: gitops_user_email
-  - default: Update from TAP Supply Chain Choreographer
-    name: gitops_commit_message
-  - default: git-https
-    name: gitops_ssh_secret
+    - name: maven_repository_url
+      value: https://repo.maven.apache.org/maven2
+    - default: main
+      name: gitops_branch
+    - default: cpage-pivotal
+      name: gitops_user_name
+    - default: pcorby@vmware.com
+      name: gitops_user_email
+    - default: Update from TAP Supply Chain Choreographer
+      name: gitops_commit_message
+    - default: git-https
+      name: gitops_ssh_secret
+    - default: https://github.com/
+      name: gitops_server_address
+    - default: cpage-pivotal
+      name: gitops_repository_owner
+    - default: tap-gitops
+      name: gitops_repository_name
   resources:
-  - name: source-provider
-    params:
-    - default: default
-      name: serviceAccount
-    - default: go-git
-      name: gitImplementation
-    templateRef:
-      kind: ClusterSourceTemplate
-      name: source-template
-  - name: source-scanner
-    params:
-    - default: scan-policy
-      name: scanning_source_policy
-    - default: blob-source-scan-template
-      name: scanning_source_template
-    sources:
-    - name: source
-      resource: source-provider
-    templateRef:
-      kind: ClusterSourceTemplate
-      name: source-scanner-template
-  - name: image-provider
-    params:
-    - default: default
-      name: serviceAccount
-    - name: registry
-      value:
-        ca_cert_data: ""
-        repository: tap/supply-chain
-        server: gcr.io/fe-cpage
-    - default: default
-      name: clusterBuilder
-    - default: ./Dockerfile
-      name: dockerfile
-    - default: ./
-      name: docker_build_context
-    - default: []
-      name: docker_build_extra_args
-    sources:
-    - name: source
-      resource: source-scanner
-    templateRef:
-      kind: ClusterImageTemplate
-      options:
-      - name: kpack-template
-        selector:
-          matchFields:
-          - key: spec.params[?(@.name=="dockerfile")]
-            operator: DoesNotExist
-      - name: kaniko-template
-        selector:
-          matchFields:
-          - key: spec.params[?(@.name=="dockerfile")]
-            operator: Exists
-  - images:
-    - name: image
-      resource: image-provider
-    name: image-scanner
-    params:
-    - default: scan-policy
-      name: scanning_image_policy
-    - default: private-image-scan-template
-      name: scanning_image_template
-    templateRef:
-      kind: ClusterImageTemplate
-      name: image-scanner-template
-  - images:
-    - name: image
-      resource: image-scanner
-    name: config-provider
-    params:
-    - default: default
-      name: serviceAccount
-    templateRef:
-      kind: ClusterConfigTemplate
-      name: convention-template
-  - configs:
-    - name: config
-      resource: config-provider
-    name: app-config
-    templateRef:
-      kind: ClusterConfigTemplate
-      options:
-      - name: config-template
-        selector:
-          matchLabels:
-            apps.tanzu.vmware.com/workload-type: web
-      - name: server-template
-        selector:
-          matchLabels:
-            apps.tanzu.vmware.com/workload-type: server
-      - name: worker-template
-        selector:
-          matchLabels:
-            apps.tanzu.vmware.com/workload-type: worker
-  - configs:
-    - name: app_def
-      resource: app-config
-    name: service-bindings
-    templateRef:
-      kind: ClusterConfigTemplate
+    - name: source-provider
+      params:
+        - default: default
+          name: serviceAccount
+        - default: go-git
+          name: gitImplementation
+      templateRef:
+        kind: ClusterSourceTemplate
+        name: source-template
+    - name: source-scanner
+      params:
+        - default: scan-policy
+          name: scanning_source_policy
+        - default: blob-source-scan-template
+          name: scanning_source_template
+      sources:
+        - name: source
+          resource: source-provider
+      templateRef:
+        kind: ClusterSourceTemplate
+        name: source-scanner-template
+    - name: image-provider
+      params:
+        - default: default
+          name: serviceAccount
+        - name: registry
+          value:
+            ca_cert_data: ""
+            repository: tap/supply-chain
+            server: gcr.io/fe-cpage
+        - default: default
+          name: clusterBuilder
+        - default: ./Dockerfile
+          name: dockerfile
+        - default: ./
+          name: docker_build_context
+        - default: []
+          name: docker_build_extra_args
+      sources:
+        - name: source
+          resource: source-scanner
+      templateRef:
+        kind: ClusterImageTemplate
+        options:
+          - name: kpack-template
+            selector:
+              matchFields:
+                - key: spec.params[?(@.name=="dockerfile")]
+                  operator: DoesNotExist
+          - name: kaniko-template
+            selector:
+              matchFields:
+                - key: spec.params[?(@.name=="dockerfile")]
+                  operator: Exists
+    - images:
+        - name: image
+          resource: image-provider
+      name: image-scanner
+      params:
+        - default: scan-policy
+          name: scanning_image_policy
+        - default: private-image-scan-template
+          name: scanning_image_template
+      templateRef:
+        kind: ClusterImageTemplate
+        name: image-scanner-template
+    - images:
+        - name: image
+          resource: image-scanner
+      name: config-provider
+      params:
+        - default: default
+          name: serviceAccount
+      templateRef:
+        kind: ClusterConfigTemplate
+        name: convention-template
+    - configs:
+        - name: config
+          resource: config-provider
+      name: app-config
+      templateRef:
+        kind: ClusterConfigTemplate
+        options:
+          - name: config-template
+            selector:
+              matchLabels:
+                apps.tanzu.vmware.com/workload-type: web
+          - name: server-template
+            selector:
+              matchLabels:
+                apps.tanzu.vmware.com/workload-type: server
+          - name: worker-template
+            selector:
+              matchLabels:
+                apps.tanzu.vmware.com/workload-type: worker
+    - configs:
+        - name: app_def
+          resource: app-config
       name: service-bindings
-  - configs:
-    - name: app_def
-      resource: service-bindings
-    name: api-descriptors
-    templateRef:
-      kind: ClusterConfigTemplate
+      templateRef:
+        kind: ClusterConfigTemplate
+        name: service-bindings
+    - configs:
+        - name: app_def
+          resource: service-bindings
       name: api-descriptors
-  - configs:
-    - name: config
-      resource: api-descriptors
-    name: config-writer
-    params:
-    - default: default
-      name: serviceAccount
-    - name: registry
-      value:
-        ca_cert_data: ""
-        repository: tap/supply-chain
-        server: gcr.io/fe-cpage
-    templateRef:
-      kind: ClusterTemplate
-      name: config-writer-template
-  - name: deliverable
-    params:
-    - name: registry
-      value:
-        ca_cert_data: ""
-        repository: tap/supply-chain
-        server: gcr.io/fe-cpage
-    - default: go-git
-      name: gitImplementation
-    templateRef:
-      kind: ClusterTemplate
-      name: deliverable-template
+      templateRef:
+        kind: ClusterConfigTemplate
+        name: api-descriptors
+    - configs:
+        - name: config
+          resource: api-descriptors
+      name: config-writer
+      params:
+        - default: default
+          name: serviceAccount
+        - name: registry
+          value:
+            ca_cert_data: ""
+            repository: tap/supply-chain
+            server: gcr.io/fe-cpage
+      templateRef:
+        kind: ClusterTemplate
+        name: config-writer-template
+    - name: deliverable
+      params:
+        - name: registry
+          value:
+            ca_cert_data: ""
+            repository: tap/supply-chain
+            server: gcr.io/fe-cpage
+        - default: go-git
+          name: gitImplementation
+      templateRef:
+        kind: ClusterTemplate
+        name: deliverable-template
   selector:
     apps.tanzu.vmware.com/scanning: "true"
   selectorMatchExpressions:
-  - key: apps.tanzu.vmware.com/workload-type
-    operator: In
-    values:
-    - web
-    - server
-    - worker
+    - key: apps.tanzu.vmware.com/workload-type
+      operator: In
+      values:
+        - web
+        - server
+        - worker
