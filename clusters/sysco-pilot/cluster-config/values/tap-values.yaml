@@ -29,6 +29,9 @@ tap_install:
         branch: main
         commit_message: "Update from TAP Supply Chain Choreographer"
         email: pcorby@vmware.com
+        server_address: https://github.com/
+        repository_owner: cpage-pivotal
+        repository_name: tap-gitops
 
     contour:
       envoy:
