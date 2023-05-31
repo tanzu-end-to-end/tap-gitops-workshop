@@ -20,7 +20,7 @@ spec:
       name: gitops_server_address
     - default: cpage-pivotal
       name: gitops_repository_owner
-    - default: tap-gitops
+    - default: tap-deliveries
       name: gitops_repository_name
   resources:
     - name: source-provider
