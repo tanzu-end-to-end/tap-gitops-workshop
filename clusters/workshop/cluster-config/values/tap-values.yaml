@@ -1,0 +1,14 @@
+---
+tap_install:
+  values:
+    shared:
+      ingress_domain: sysco.tap-pilot.com
+      image_registry:
+        project_path: "gcr.io/fe-cpage/tap"
+        username: _json_key
+
+      kubernetes_version: 1.25.9 # Required regardless of distribution when Kubernetes version is 1.25 or later.
+
+    ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
+
+    profile: full # Can take iterate, build, run, view.
