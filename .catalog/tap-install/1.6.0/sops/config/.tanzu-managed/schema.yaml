@@ -1,0 +1,30 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+#@schema/title "TAP Installation Configuration"
+#@schema/desc "Cluster configuration pertaining to the installation of Tanzu Application Platform."
+tap_install:
+
+  #@schema/title "TAP Version"
+  version:
+    #@schema/title "PackageRepository OCI Tag"
+    #@schema/desc "Version or SHA-256 digest of TAP PackageRepository being installed."
+    #@schema/validation min_len=1
+    package_repo_bundle_tag: ""
+    #@schema/title "Carvel Package Version"
+    #@schema/desc "Version of the tap.tanzu.vmware.com Package being installed."
+    #@schema/validation min_len=1
+    package_version: ""
+
+  #@schema/title "TAP PackageRepository"
+  package_repository:
+    #@schema/title "Repository URL"
+    #@schema/desc "Fully qualified URL (including repository) where the TAP PackageRepository is hosted."
+    #@schema/examples ("TanzuNet (not recommended for production)", "registry.tanzu.vmware.com/tanzu-application-platform/tap-packages")
+    #@schema/validation min_len=1
+    oci_repository: ""
+
+  #@schema/title "TAP Values (non-sensitive)"
+  #@schema/desc "Non-sensitive portion of the Tanzu Application Platform configuration values."
+  #@schema/type any=True
+  values: {}

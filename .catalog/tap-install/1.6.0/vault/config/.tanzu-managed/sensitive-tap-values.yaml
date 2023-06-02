@@ -1,0 +1,18 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tap-sensitive-values
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: eso/tap-sensitive-values
+    kapp.k14s.io/change-rule.0: "upsert after upserting eso/secretstore"
+spec:
+  secretStoreRef:
+    name: tap-install-secrets
+    kind: SecretStore
+  refreshInterval: "1m"
+  data:
+    - secretKey: sensitive-tap-values.yaml
+      remoteRef: #@ data.values.tap_install.secrets.eso.remote_refs.tap_sensitive_values.sensitive_tap_values_yaml

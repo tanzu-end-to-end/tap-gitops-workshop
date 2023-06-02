@@ -1,0 +1,54 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: external-secrets.apps.tanzu.vmware.com
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: eso/install
+    kapp.k14s.io/change-rule.0: "upsert after upserting tap-repo"
+    kapp.k14s.io/change-rule.1: "delete before deleting tap-repo"
+spec:
+  serviceAccountName: sync-sa
+  packageRef:
+    refName: external-secrets.apps.tanzu.vmware.com
+    #! Version is unconstrained because:
+    #! - ESO can only be installed once in a cluster
+    #! - TAP provides secrets management to workflows through ESO
+    #! ==> Use the version included in the TAP PackageRepository
+    versionSelection: {}
+---
+#! Stub-out CRDs until it is created by ESO package
+#!   see also: https://carvel.dev/blog/incorporating-external-resources-in-kapp/#real-world-example-gatekeeper
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: secretstores.external-secrets.io
+  annotations:
+    #! https://carvel.dev/kapp/docs/v0.54.0/apply/#kappk14sioexists
+    kapp.k14s.io/exists: ""
+    #! Without this change-rule, kapp waits (indefinitely) for this CRD to exist in an earlier change-group.
+    kapp.k14s.io/change-rule.0: "upsert after upserting eso/install"
+spec:
+  group: external-secrets.io
+  names:
+    kind: SecretStore
+  versions:
+    - name: v1beta1
+  scope: Namespaced
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: externalsecrets.external-secrets.io
+  annotations:
+    kapp.k14s.io/exists: ""
+    kapp.k14s.io/change-rule.0: "upsert after upserting eso/install"
+spec:
+  group: external-secrets.io
+  names:
+    kind: ExternalSecret
+  versions:
+    - name: v1beta1
+  scope: Namespaced

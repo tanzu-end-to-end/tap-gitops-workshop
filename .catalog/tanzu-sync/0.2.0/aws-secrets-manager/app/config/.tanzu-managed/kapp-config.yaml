@@ -1,0 +1,21 @@
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+metadata:
+  annotations: {}
+waitRules:
+- supportsObservedGeneration: false
+  conditionMatchers:
+  - type: Ready
+    status: "True"
+    success: true
+  - type: Ready
+    status: "False"
+    success: false
+  resourceMatchers:
+  - apiVersionKindMatcher: {apiVersion: external-secrets.io/v1beta1, kind: ExternalSecret}
+  - apiVersionKindMatcher: {apiVersion: external-secrets.io/v1beta1, kind: SecretStore}
+    affectedResources:
+      objectReferences:
+      - path: [spec, template, spec, containers, {allIndexes: true}, env, {allIndexes: true}, valueFrom]
+        resourceMatchers:
+        - apiVersionKindMatcher: {apiVersion: external-secrets.io/v1beta1, kind: ExternalSecret}

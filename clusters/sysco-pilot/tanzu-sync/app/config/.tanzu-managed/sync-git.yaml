@@ -1,0 +1,24 @@
+#@ load("@ytt:base64", "base64")
+#@ load("@ytt:data", "data")
+---
+#@ def ssh_selected():
+#@   return data.values.secrets.sops.git.ssh != None
+#@ end
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sync-git
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tanzu-sync-secrets
+    kapp.k14s.io/update-strategy: always-replace
+type: #@ "kubernetes.io/ssh-auth" if ssh_selected() else "kubernetes.io/basic-auth"
+data:
+  #@ if ssh_selected():
+  ssh-privatekey: #@ base64.encode(data.values.secrets.sops.git.ssh.private_key)
+  ssh-knownhosts: #@ base64.encode(data.values.secrets.sops.git.ssh.known_hosts)
+  #@ else:
+  username: #@ base64.encode(data.values.secrets.sops.git.basic_auth.username)
+  password: #@ base64.encode(data.values.secrets.sops.git.basic_auth.password)
+  #@ end

@@ -1,0 +1,9 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.all, expects="1+"
+---
+#@overlay/match when="1+"
+#@overlay/match-child-defaults missing_ok=True
+metadata:
+  annotations:
+    tanzu-sync.tanzu.vmware.com/variant: eso/aws-secrets-manager

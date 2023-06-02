@@ -1,0 +1,13 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: tanzu-tap-repository
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tap-repo
+spec:
+  fetch:
+    imgpkgBundle:
+      image: #@ "{}:{}".format(data.values.tap_package_repository.oci_repository, data.values.tap_install.version.package_repo_bundle_tag)
