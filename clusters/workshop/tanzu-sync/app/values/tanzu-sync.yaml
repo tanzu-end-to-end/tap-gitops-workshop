@@ -1,0 +1,7 @@
+---
+git:
+  url: https://github.com/tanzu-end-to-end/tap-gitops-workshop.git
+  ref: origin/main
+  sub_path: clusters/workshop/cluster-config
+tap_package_repository:
+  oci_repository: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages

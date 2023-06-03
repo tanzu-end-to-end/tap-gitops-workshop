@@ -1,0 +1,22 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: tap
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
+spec:
+  serviceAccountName: tap-installer-sa
+  packageRef:
+    refName: tap.tanzu.vmware.com
+    versionSelection:
+      constraints: #@ data.values.tap_install.version.package_version
+  values:
+    - secretRef:
+        name: tap-values
+    - secretRef:
+        name: tap-sensitive-values

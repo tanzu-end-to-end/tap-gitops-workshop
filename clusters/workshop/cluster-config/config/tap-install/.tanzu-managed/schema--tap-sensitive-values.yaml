@@ -1,0 +1,9 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+tap_install:
+
+  #@schema/title "TAP Values (sensitive)"
+  #@schema/desc "Sensitive portion of the Tanzu Application Platform configuration values."
+  #@schema/type any=True
+  sensitive_values: {}
