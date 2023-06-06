@@ -9,6 +9,7 @@ tap_install:
     ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
 
     shared:
+      kubernetes_version: "1.25.9"
       ingress_domain: sysco.tap-pilot.com
       ingress_issuer: ""
       image_registry:

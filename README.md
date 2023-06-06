@@ -6,3 +6,7 @@ This reference implementation is pre-configured to install Tanzu Application Pla
 
 For detailed documentation, refer to [VMware Tanzu Application Platform Product Documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/install-gitops-intro.html).
 
+# Stage 1
+
+Prerequisites: K8s 1.25 cluster, Github Developer Token, Registry credentials, DNS Domain, Cert, TanzuNet Credentials
+

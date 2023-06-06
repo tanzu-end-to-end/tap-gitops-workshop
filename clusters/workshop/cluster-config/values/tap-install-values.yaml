@@ -2,5 +2,5 @@ tap_install:
   package_repository:
     oci_repository: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages
   version:
-    package_repo_bundle_tag: "1.6.0-build.38"
-    package_version: "1.6.0-build.38"    
+    package_repo_bundle_tag: "1.6.0-build.39"
+    package_version: "1.6.0-build.39"
