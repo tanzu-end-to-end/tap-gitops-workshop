@@ -1,0 +1,14 @@
+# PLEASE SOPS-ENCRYPT THIS FILE BEFORE COMMITTING TO GIT
+
+secrets:
+  sops:
+    age_key: |
+      # Contents of generated age key file (e.g. cat key.txt)
+    registry:
+      hostname: registry.tanzu.vmware.com
+      username: # TanzuNet username
+      password: # TanzuNet password
+    git:
+      basic_auth:
+        username: # Github username
+        password: # Github access token

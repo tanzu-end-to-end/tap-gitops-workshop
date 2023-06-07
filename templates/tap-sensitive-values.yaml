@@ -1,0 +1,7 @@
+# PLEASE SOPS-ENCRYPT THIS FILE BEFORE COMMITTING TO GIT
+
+tap_install:
+  sensitive_values:
+    shared:
+      image_registry:
+        password: # Registry password
