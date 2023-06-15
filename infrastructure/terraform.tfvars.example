@@ -1,0 +1,11 @@
+git_auth_via_ssh_key                 = true
+tanzu_network_refresh_token          = ""
+tanzu_registry_username              = ""
+tanzu_registry_password              = ""
+ssh_private_key_path                 = ""
+ssh_private_key_passphrase_protected = false
+ssh_public_key_path                  = ""
+ssh_username                         = ""
+
+gh_username                          = "" # set if git_auth_via_ssh_key is false
+gh_token                             = "" # set if git_auth_via_ssh_key is false

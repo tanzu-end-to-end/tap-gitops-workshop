@@ -1,0 +1,60 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+users:
+  - name: ${username}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+write_files:
+  - encoding: b64
+    owner: ${username}:${username}
+    content: ${ssh_private_key}
+    path: /home/${username}/.ssh/priv_key
+    permissions: "0600"
+    defer: true
+  - encoding: b64
+    owner: ${username}:${username}
+    content: ${kubeconfig}
+    path: /home/${username}/.kube/config
+    defer: true
+  - encoding: b64
+    content: ${clone_and_setup}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/clone-and-setup.sh
+    permissions: "0755"
+  - encoding: b64
+    content: ${install_tools_script}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/install-tools.sh
+    permissions: "0755"
+  - encoding: b64
+    content: ${login_script}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/login.sh
+    permissions: "0755"
+  - encoding: b64
+    content: ${tap_version}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/tap-version.yaml
+    permissions: "0755"
+
+runcmd:
+  - |
+    su - ${username} << EOM
+      /usr/local/bin/tap-gitops-workshop-scripts/install-tools.sh
+    EOM
+  - |
+    su - ${username} << EOM
+      TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}" \
+        GIT_AUTH_VIA_SSH_KEY=${git_auth_via_ssh_key} \
+        GH_TOKEN="${gh_token}" \
+        SSH_PRIVATE_KEY_PASSPHRASE_PROTECTED=${ssh_private_key_passphrase_protected} \
+        /usr/local/bin/tap-gitops-workshop-scripts/login.sh
+    EOM
+  - |
+    su - ${username} << EOM
+      TANZU_REGISTRY_USERNAME="${tanzu_registry_username}" \
+        TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}" \
+        /usr/local/bin/tap-gitops-workshop-scripts/clone-and-setup.sh
+    EOM

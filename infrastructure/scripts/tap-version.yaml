@@ -1,0 +1,7 @@
+tap:
+  version: 1.5.1
+  product_file_id: 1478717
+cluster_essentials:
+  version: 1.5.1
+  bundle: "registry.tanzu.vmware.com/tanzu-cluster-essentials/cluster-essentials-bundle@sha256:c7b0988cf3e982625287b241db5d78c30780886dfe9ada01559bb5cd341e6181"
+  product_file_id: 1501579
