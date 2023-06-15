@@ -7,5 +7,5 @@ ssh_private_key_passphrase_protected = false
 ssh_public_key_path                  = ""
 ssh_username                         = ""
 
-gh_username                          = "" # set if git_auth_via_ssh_key is false
-gh_token                             = "" # set if git_auth_via_ssh_key is false
+gh_username                          = ""
+gh_token                             = ""
