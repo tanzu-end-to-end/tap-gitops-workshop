@@ -23,4 +23,14 @@ Participants will run the workshop in stages, where they perform a base install 
 
 [**Stage 1: Perform a base install of Tanzu Application Platform**](Stage-1-Base-Install.md)
 
+[**Stage 2: Enable Ingress to Tanzu Application Platform**](Stage-2-Ingress.md)
+
+[**Stage 3: Add Namespace Provisioner to Tanzu Application Platform**](Stage-3-Namespace-Provisioner.md)
+
+[**Stage 4: Configure Scanning-Testing Supply Chain**](Stage-4-Scanning-Testing.md)
+
+[**Stage 5: Customize TAP GUI**](Stage-5-Customize-TAP-GUI.md)
+
+[**Stage 6: Blow it Away! Reinstall!**](Stage-6-reinstall.md)
+
 
