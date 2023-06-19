@@ -42,8 +42,8 @@ The `sops` argument indicates that we will be using SOPS Secret Management (with
 Navigate back to the $WORKSHOP_ROOT DIRECTORY. Clone this repo into this directory. It won't be part of your GitOps install, but it contains some template files we can copy into your repo to get you started quickly:
 ```
 git clone https://github.com/tanzu-end-to-end/tap-gitops-workshop
-cp tap-gitops-workshop/workshop/templates/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
-cp tap-gitops-workshop/workshop/templates/tap-install-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
+cp tap-gitops-workshop/templates/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
+cp tap-gitops-workshop/templates/tap-install-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
 ```
 
 Familiarize yourself with the two files you copied into yout GitOps repo. The first one provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
