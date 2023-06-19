@@ -12,20 +12,19 @@ Here we will create the GitOps repo that records the configuration of your TAP i
 
 First, download the base template for your repo from TanzuNet. Go the latest release page for Tanzu Application Platform, and download `tanzu-gitops-ri-0.2.0.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
 
-Set an environment variable $GITHUB_ORG to the org where you will be publishing the GitOps repo
-```
-export GITHUB_ORG=<Insert your Github Org here>
-```
-
 From the $WORKSHOP_ROOT working directory, execute these commands:
 ```
 mkdir -p workshop-clusters
 tar xvf tanzu-gitops-ri-0.2.0.tgz -C workshop-clusters
 cd workshop-clusters
 git init -b main
-git remote add origin https://github.com/$GITHUB_ORG/workshop-clusters.git 
 git add . && git commit -m "Initialize Tanzu GitOps RI"
-git push -u origin main
+```
+
+You've now initialized the Git repo on your local machine. Create a Github repository from this local repo. If you have the Github CLI installed, you can do this with:
+
+```
+gh repo create
 ```
 
 The repo we have created can store the configuration for **all** of your TAP clusters. Each cluster will have its own subfolder in the GitOps repo where its configuration is stored. Let's create the cluster subfolder for `workshop`, which will be the name of our workshop cluster.
