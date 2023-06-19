@@ -13,7 +13,7 @@ Participants need to set up the following prerequisites before attending the wor
 * Account credentials on [Tanzu Network](https://network.tanzu.vmware.com/)
 * Current CLI tools for working with the environment: kubectl, [k9s](https://k9scli.io/topics/install/), git, [SOPS](https://github.com/mozilla/sops/releases) and [age](https://github.com/FiloSottile/age#installation) for encrypting secrets, and [Carvel](https://carvel.dev/#install).
 
-Pre Bhakta has authored a [complete automation] for setting up all of the prerequisites on Azure. If participants do not have the prereqs readily available, they are encouraged to use this setup with their Azure account.
+Pre Bhakta has authored a [complete automation](infrastructure/) for setting up all of the prerequisites on Azure. If participants do not have the prereqs readily available, they are encouraged to use this setup with their Azure account.
 
 Participants can track their progrss on the prerequisites with a local copy of [this Excel worksheet](/Prereqs.xlsx).
 
