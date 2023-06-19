@@ -11,7 +11,7 @@ Participants need to set up the following prerequisites before attending the wor
 * A wildcard domain (e.g. *.tap.mydomain.com) that the workshop participant owns
 * A [Github Developer Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with permissions to read and write to your repos
 * Account credentials on [Tanzu Network](https://network.tanzu.vmware.com/)
-* Current CLI tools for working with the environment: kubectl, [k9s](https://k9scli.io/topics/install/), git, [SOPS](https://github.com/mozilla/sops/releases) and [age](https://github.com/FiloSottile/age#installation) for encrypting secrets, and [Carvel](https://carvel.dev/#install).
+* Current CLI tools for working with the environment: kubectl, [k9s](https://k9scli.io/topics/install/), git, [github](https://cli.github.com/manual/installation), [SOPS](https://github.com/mozilla/sops/releases) and [age](https://github.com/FiloSottile/age#installation) for encrypting secrets, and [Carvel](https://carvel.dev/#install).
 
 Pre Bhakta has authored a [complete automation](infrastructure/) for setting up all of the prerequisites on Azure. If participants do not have the prereqs readily available, they are encouraged to use this setup with their Azure account.
 
