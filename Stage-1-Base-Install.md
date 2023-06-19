@@ -36,9 +36,7 @@ The repo we have created can store the configuration for **all** of your TAP clu
 
 The `sops` argument indicates that we will be using SOPS Secret Management (with Age encryption) to securely store the secrets that are needed to configure our cluster.
 
----
 :bulb: **TIP:** We're going to be spending a lot of time adding, editng, and commiting files in this repo. It's recommended that you bring up the `workshop-clusters` directory as a project in a Git-aware, YAML-aware editor such as Visual Studio Code or IntelliJ. This will make it easy to navigate, edit, and commit.
----
 
 ### Create a starter configuration for your cluster
 
@@ -88,6 +86,10 @@ The encrypted files, with the `.sops.yaml` suffix, are safe to store in your Git
 mv tanzu-sync-values.sops.yaml ../tap-gitops-workshop/clusters/workshop/tanzu-sync/app/sensitive-values
 mv tap-sensitive-values.sops.yaml ../tap-gitops-workshop/clusters/workshop/cluster-config/values
 ```
+
+:bulb: **TIP:** Updating these secrets going forward follows the same flow. Edit the secrets file in your `enc` directory, use the `sops` CLI to encrypt them, and then move them into your GitOps repo. But there's an easier way! If you use a SOPS-aware IDE plugin like [VSCode SOPS](https://marketplace.visualstudio.com/items?itemName=signageos.signageos-vscode-sops), you can directly edit the `.sops.yaml` file in your GitOps repo as unencrypted plaintext, but the plugin will re-encrypt the file before writing to disk so that unencrypted secrets can't be committed to your GitOps repo.
+
+### Install TAP
 
 OK, we've got our cluster configuration the way we want it. Let's commit to Git, then we will run a configuration script to point our cluster at its associated GitOps repo.
 
