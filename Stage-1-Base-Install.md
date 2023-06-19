@@ -25,7 +25,7 @@ cd workshop-clusters
 git init -b main
 git remote add origin git@github.com:$GITHUB_ORG/workshop-clusters.git 
 git add . && git commit -m "Initialize Tanzu GitOps RI"
-git push -u origin
+git push -u origin main
 ```
 
 The repo we have created can store the configuration for **all** of your TAP clusters. Each cluster will have its own subfolder in the GitOps repo where its configuration is stored. Let's create the cluster subfolder for `workshop`, which will be the name of our workshop cluster.
