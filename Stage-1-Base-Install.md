@@ -70,7 +70,7 @@ cp ../tap-gitops-workshop/templates/tanzu-sync-values.yaml .
 cp ../tap-gitops-workshop/templates/tap-sensitive-values.yaml .
 ```
 
-We used `age` to generate an encryption key for our repo (don't lose this!), and set environment variables to reference that key when we encrypt. Then we copied templates for unencrypted secrets into this sensitive `enc` directory.
+We used `age` to generate an encryption key for our repo (it's `key.txt`, don't lose this!), and set environment variables to reference that key when we encrypt. Then we copied templates for unencrypted secrets into this sensitive `enc` directory.
 
 Open these two files, `tanzu-sync-values.yaml` and `tap-sensitive-values.yaml`, in an editor. Fill out these files as described with your Github developer token, registry credentials, and TanzuNet credentials in plain text.
 
@@ -82,8 +82,8 @@ sops --encrypt tap-sensitive-values.yaml > tap-sensitive-values.sops.yaml
 
 The encrypted files, with the `.sops.yaml` suffix, are safe to store in your GitOps repo, so let's move them there:
 ```
-mv tanzu-sync-values.sops.yaml ../tap-gitops-workshop/clusters/workshop/tanzu-sync/app/sensitive-values
-mv tap-sensitive-values.sops.yaml ../tap-gitops-workshop/clusters/workshop/cluster-config/values
+mv tanzu-sync-values.sops.yaml ../workshop-clusters/clusters/workshop/tanzu-sync/app/sensitive-values
+mv tap-sensitive-values.sops.yaml ../workshop-clusters/clusters/workshop/cluster-config/values
 ```
 
 :bulb: **TIP:** Updating these secrets going forward follows the same flow. Edit the secrets file in your `enc` directory, use the `sops` CLI to encrypt them, and then move them into your GitOps repo. But there's an easier way! If you use a SOPS-aware IDE plugin like [VSCode SOPS](https://marketplace.visualstudio.com/items?itemName=signageos.signageos-vscode-sops), you can directly edit the `.sops.yaml` file in your GitOps repo as unencrypted plaintext, but the plugin will re-encrypt the file before writing to disk so that unencrypted secrets can't be committed to your GitOps repo.
