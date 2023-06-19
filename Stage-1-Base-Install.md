@@ -66,8 +66,8 @@ age-keygen -o key.txt
 export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
 export SOPS_AGE_KEY=$(cat key.txt)
 
-cp ../tap-gitops-workshop/workshop/templates/tanzu-sync-values.yaml .
-cp ../tap-gitops-workshop/workshop/templates/tap-sensitive-values.yaml .
+cp ../tap-gitops-workshop/templates/tanzu-sync-values.yaml .
+cp ../tap-gitops-workshop/templates/tap-sensitive-values.yaml .
 ```
 
 We used `age` to generate an encryption key for our repo (don't lose this!), and set environment variables to reference that key when we encrypt. Then we copied templates for unencrypted secrets into this sensitive `enc` directory.
