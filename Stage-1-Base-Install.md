@@ -36,7 +36,9 @@ The repo we have created can store the configuration for **all** of your TAP clu
 
 The `sops` argument indicates that we will be using SOPS Secret Management (with Age encryption) to securely store the secrets that are needed to configure our cluster.
 
+---
 :bulb: **TIP:** We're going to be spending a lot of time adding, editng, and commiting files in this repo. It's recommended that you bring up the `workshop-clusters` directory as a project in a Git-aware, YAML-aware editor such as Visual Studio Code or IntelliJ. This will make it easy to navigate, edit, and commit.
+---
 
 ### Create a starter configuration for your cluster
 
