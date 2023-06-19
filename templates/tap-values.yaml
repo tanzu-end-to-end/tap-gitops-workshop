@@ -1,6 +1,8 @@
 ---
 tap_install:
   values:
+    profile: full
+
     shared:
       ingress_domain: # Wildcard DNS Domain (e.g. tap.myexample.com)
       image_registry:
@@ -11,4 +13,8 @@ tap_install:
 
     ceip_policy_disclosed: true
 
-    profile: full
+    # These packages will be deprecated in future versions of TAP, so we will exclude them to free up space on the cluster
+    excluded_packages:
+      - learningcenter.tanzu.vmware.com
+      - workshops.learningcenter.tanzu.vmware.com
+      - eventing.tanzu.vmware.com
