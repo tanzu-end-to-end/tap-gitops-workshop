@@ -23,7 +23,7 @@ mkdir -p workshop-clusters
 tar xvf tanzu-gitops-ri-0.2.0.tgz -C workshop-clusters
 cd workshop-clusters
 git init -b main
-git remote add origin git@github.com:$GITHUB_ORG/workshop-clusters.git 
+git remote add origin https://github.com/$GITHUB_ORG/workshop-clusters.git 
 git add . && git commit -m "Initialize Tanzu GitOps RI"
 git push -u origin main
 ```
