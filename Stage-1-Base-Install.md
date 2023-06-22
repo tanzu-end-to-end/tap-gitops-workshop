@@ -43,14 +43,11 @@ Navigate back to the $WORKSHOP_ROOT DIRECTORY. Clone this repo into this directo
 ```
 git clone https://github.com/tanzu-end-to-end/tap-gitops-workshop
 cp tap-gitops-workshop/templates/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
-cp tap-gitops-workshop/templates/tap-install-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
 ```
 
-Familiarize yourself with the two files you copied into your GitOps repo. The first one provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
+Familiarize yourself with the file you copied into your GitOps repo. It provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
 
 Open this file ($WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml) in an editor, and fill our the placeholder values: your wildcard DNS domain, the project path for your container registry, the username for your registry credentials, and the Kubernetes version your cluster is running.
-
-The second file `tap-install-values.yaml` is what we will use to control the version of TAP we are installing. In-place upgrades of the platform can be performed by simply editing this file and committing.
 
 ### Add secrets to your configuration
 
@@ -72,7 +69,7 @@ cp ../tap-gitops-workshop/templates/tap-sensitive-values.yaml .
 
 We used `age` to generate an encryption key for our repo (it's `key.txt`, don't lose this!), and set environment variables to reference that key when we encrypt. Then we copied templates for unencrypted secrets into this sensitive `enc` directory.
 
-Open these two files, `tanzu-sync-values.yaml` and `tap-sensitive-values.yaml`, in an editor. Fill out these files as described with your Github developer token, registry credentials, and TanzuNet credentials in plain text.
+Open these two files, `tanzu-sync-values.yaml` and `tap-sensitive-values.yaml`, in an editor. Fill out these files as described with your Github developer token, registry credentials, and TanzuNet credentials in plain text. You will also be adding your encryption key here, which you can get by typing `cat key.txt`.
 
 Now we will encrypt the files:
 ```
