@@ -109,3 +109,5 @@ We're ready to install! Please make sure that your kubeconfig is pointed at the 
 ```
 ./tanzu-sync/scripts/deploy.sh
 ```
+
+## [Next Stage: Enable Ingress >>](Stage-2-Ingress.md)
