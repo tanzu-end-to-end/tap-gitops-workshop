@@ -42,7 +42,7 @@ variable "ssh_username" {
 
 variable "azure_location" {
   type    = string
-  default = "southcentralus"
+  default = "centralus"
 }
 
 variable "azure_tgw_resource_group_name" {
