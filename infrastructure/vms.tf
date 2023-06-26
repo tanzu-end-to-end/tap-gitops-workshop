@@ -17,7 +17,7 @@ resource "azurerm_linux_virtual_machine" "jump-server-vm" {
     ssh_private_key                      = base64encode(file(var.ssh_private_key_path))
     ssh_private_key_passphrase_protected = var.ssh_private_key_passphrase_protected
     kubeconfig                           = base64encode(azurerm_kubernetes_cluster.aks.kube_config_raw)
-    clone_and_setup                      = base64encode(file("./scripts/clone-and-setup.sh"))
+    download_and_install                 = base64encode(file("./scripts/download-and-install.sh"))
     install_tools_script                 = base64encode(file("./scripts/install-tools.sh"))
     login_script                         = base64encode(file("./scripts/login.sh"))
     tap_version                          = base64encode(file("./scripts/tap-version.yaml"))

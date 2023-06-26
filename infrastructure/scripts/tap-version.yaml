@@ -1,5 +1,6 @@
 tap:
-  version: 1.5.1
+  version: 1.5.2
+tanzu_cli:
   product_file_id: 1478717
 cluster_essentials:
   version: 1.5.1

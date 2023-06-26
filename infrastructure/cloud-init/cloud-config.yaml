@@ -23,8 +23,8 @@ write_files:
     path: /home/${username}/.kube/config
     defer: true
   - encoding: b64
-    content: ${clone_and_setup}
-    path: /usr/local/bin/tap-gitops-workshop-scripts/clone-and-setup.sh
+    content: ${download_and_install}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/download-and-install.sh
     permissions: "0755"
   - encoding: b64
     content: ${install_tools_script}
@@ -56,5 +56,5 @@ runcmd:
     su - ${username} << EOM
       TANZU_REGISTRY_USERNAME="${tanzu_registry_username}" \
         TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}" \
-        /usr/local/bin/tap-gitops-workshop-scripts/clone-and-setup.sh
+        /usr/local/bin/tap-gitops-workshop-scripts/download-and-install.sh
     EOM
