@@ -1,3 +1,8 @@
+output "azure_container_fqdn" {
+  value = azurerm_container_registry.acr.login_server
+  description = "The login server for Azure Container Registry"
+}
+
 output "azure_container_registry_username" {
   value = azurerm_container_registry.acr.admin_username
   description = "The (admin) username for Azure Container Registry"
