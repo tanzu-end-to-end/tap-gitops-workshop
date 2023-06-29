@@ -6,8 +6,8 @@ shopt -s nocasematch
 if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
   # use GitHub token for git auth
 
-  echo "export GH_USERNAME="$GH_USERNAME"" >.envrc
-  echo "export GH_TOKEN="$GH_TOKEN"" >.envrc
+  echo "export GH_USERNAME=\"$GH_USERNAME\"" >.envrc
+  echo "export GH_TOKEN=\"$GH_TOKEN\"" >.envrc
   direnv allow
   gh auth login --hostname github.com
 
