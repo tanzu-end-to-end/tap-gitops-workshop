@@ -37,7 +37,7 @@ tar -xvf /tmp/$CLUSTER_ESSENTIALS_PRODUCT_FILE -C /tmp/tanzu-cluster-essentials
 TAP_VERSION=$(yq e .tap.version $TAP_VERSION_YAML)
 
 TANZU_CLI_PRODUCT_FILE='tanzu-framework-linux-amd64-*.tar'
-TANZU_CLI_PRODUCT_FILE_ID=$(yq e .tanzu_cli.product_file_id $TAP_VERSION_YAML)
+TANZU_CLI_PRODUCT_FILE_ID=$(yq e .tap.tanzu_cli.product_file_id $TAP_VERSION_YAML)
 TANZU_CLI='tanzu-core-linux_amd64'
 
 rm -f /tmp/$TANZU_CLI_PRODUCT_FILE
