@@ -42,7 +42,7 @@ brew install k9s
 brew install kubectl
 
 # mozilla sops (https://docs.technotim.live/posts/install-mozilla-sops/)
-SOPS_LATEST_VERSION=$(curl -s "https://api.github.com/repos/mozilla/sops/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+SOPS_LATEST_VERSION=$(curl -s "https://api.github.com/repositories/40684033/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
 curl -Lo sops.deb "https://github.com/mozilla/sops/releases/latest/download/sops_${SOPS_LATEST_VERSION}_amd64.deb"
 sudo apt --fix-broken install ./sops.deb
 rm -rf sops.deb
