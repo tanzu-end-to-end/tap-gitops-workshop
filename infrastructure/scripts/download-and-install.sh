@@ -8,7 +8,7 @@ TAP_VERSION_YAML="/usr/local/bin/tap-gitops-workshop-scripts/tap-version.yaml"
 CLUSTER_ESSENTIALS_VERSION=$(yq e .cluster_essentials.version $TAP_VERSION_YAML)
 
 CLUSTER_ESSENTIALS_PRODUCT_FILE="tanzu-cluster-essentials-linux-amd64-$CLUSTER_ESSENTIALS_VERSION.tgz"
-CLUSTER_ESSENTIALS_PRODUCT_FILE_ID=$(yq e .cluster_essentials.product_file_id $TAP_VERSION_YAML)
+CLUSTER_ESSENTIALS_PRODUCT_FILE_ID=$(yq e .cluster_essentials.tanzu_net.linux_product_file_id $TAP_VERSION_YAML)
 
 rm -f /tmp/$CLUSTER_ESSENTIALS_PRODUCT_FILE
 rm -rf /tmp/tanzu-cluster-essentials
@@ -37,7 +37,7 @@ tar -xvf /tmp/$CLUSTER_ESSENTIALS_PRODUCT_FILE -C /tmp/tanzu-cluster-essentials
 TAP_VERSION=$(yq e .tap.version $TAP_VERSION_YAML)
 
 TANZU_CLI_PRODUCT_FILE='tanzu-framework-linux-amd64-*.tar'
-TANZU_CLI_PRODUCT_FILE_ID=$(yq e .tap.tanzu_cli.product_file_id $TAP_VERSION_YAML)
+TANZU_CLI_PRODUCT_FILE_ID=$(yq e .tap.tanzu_cli.tanzu_net.linux_product_file_id $TAP_VERSION_YAML)
 TANZU_CLI='tanzu-core-linux_amd64'
 
 rm -f /tmp/$TANZU_CLI_PRODUCT_FILE
