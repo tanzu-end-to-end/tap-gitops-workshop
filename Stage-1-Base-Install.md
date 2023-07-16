@@ -47,7 +47,7 @@ Clone this repo into your workshop root directory. It won't be part of your GitO
 ```
 cd $WORKSHOP_ROOT
 git clone https://github.com/tanzu-end-to-end/tap-gitops-workshop
-cp tap-gitops-workshop/templates/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
+cp tap-gitops-workshop/templates/install/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
 ```
 
 Familiarize yourself with the file you copied into your GitOps repo. It provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
@@ -69,8 +69,8 @@ age-keygen -o key.txt
 export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
 export SOPS_AGE_KEY=$(cat key.txt)
 
-cp ../tap-gitops-workshop/templates/tanzu-sync-values.yaml .
-cp ../tap-gitops-workshop/templates/tap-sensitive-values.yaml .
+cp ../tap-gitops-workshop/templates/install/tanzu-sync-values.yaml .
+cp ../tap-gitops-workshop/templates/install/tap-sensitive-values.yaml .
 ```
 
 We used `age` to generate an encryption key for our repo (it's `key.txt`, don't lose this!), and set environment variables to reference that key when we encrypt. Then we copied templates for unencrypted secrets into this sensitive `enc` directory.

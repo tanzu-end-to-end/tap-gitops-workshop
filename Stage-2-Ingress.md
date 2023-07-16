@@ -12,7 +12,7 @@
    envoy   LoadBalancer   10.0.73.9    4.151.25.22   80:31334/TCP,443:31095/TCP   5d19h
    ```
 
-1. In your DNS zone, create a wildcard `A` record for the TAP-GUI, using the `EXTERNAL-IP` from the output above and the `ingress_domain` wildcard DNS domain from your `tap-values.yaml` file.
+1. In your DNS zone, create a wildcard `A` record for the TAP-GUI, using the `EXTERNAL-IP` from the output above and the `ingress_domain` wildcard DNS domain from your `tap-values.yaml` file. (If this is an AWS load balancer, you will see a DNS name instead of an IP address, and you will create it as a CNAME record rather than an A record)
 
 1. From your browser, navigate to [https://tap-gui.<ingress_domain>](https://tap-gui.<ingress_domain>) and verify you can see the TAP GUI.  
 

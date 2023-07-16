@@ -1,0 +1,4 @@
+#@data/values
+---
+namespaces:
+  - name: developer-ns
