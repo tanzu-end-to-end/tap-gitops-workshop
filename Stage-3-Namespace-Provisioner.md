@@ -153,9 +153,17 @@ tap_install:
     namespace_provisioner:
       controller: false
       sync_period: 30s
-      additional_sources:
       gitops_install:
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner
         url: https://github.com/<MY-REPO>/workshop-clusters.git
+      additional_sources:
+        - git:
+            ref: origin/main
+            subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
+            url: https://github.com/cpage-pivotal/workshop-clusters.git
+      default_parameters:
+        supply_chain_service_account:
+          secrets:
+            - git-https
 ```
