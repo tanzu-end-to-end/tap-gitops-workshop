@@ -4,7 +4,10 @@ In stage 1, we will perform a minimal install of a single-cluster TAP environmen
 
 ### Base working directory
 
-Create a base working directory on your local machine for these workshop activities. We will refer to this directory going forward as $WORKSHOP_ROOT
+Create a base working directory on your local machine for these workshop activities. Assign that directory path to the environment variable WORKSHOP_ROOT
+```
+export WORKSHOP_ROOT=/path/to/my/workshop
+```
 
 ### Initialize your platform GitOps repo
 
@@ -12,8 +15,9 @@ Here we will create the GitOps repo that records the configuration of your TAP i
 
 First, download the base template for your repo from TanzuNet. Go the latest release page for Tanzu Application Platform, and download `tanzu-gitops-ri-0.2.0.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
 
-From the $WORKSHOP_ROOT working directory, initialize the Git repo on your local machine:
+Initialize the Git repo on your local machine:
 ```
+cd $WORKSHOP_ROOT
 mkdir -p workshop-clusters
 tar xvf tanzu-gitops-ri-0.2.0.tgz -C workshop-clusters
 cd workshop-clusters
@@ -39,15 +43,16 @@ The `sops` argument indicates that we will be using SOPS Secret Management (with
 
 ### Create a starter configuration for your cluster
 
-Navigate back to the $WORKSHOP_ROOT DIRECTORY. Clone this repo into this directory. It won't be part of your GitOps install, but it contains some template files we can copy into your repo to get you started quickly:
+Clone this repo into your workshop root directory. It won't be part of your GitOps install, but it contains some template files we can copy into your repo to get you started quickly:
 ```
+cd $WORKSHOP_ROOT
 git clone https://github.com/tanzu-end-to-end/tap-gitops-workshop
 cp tap-gitops-workshop/templates/tap-values.yaml workshop-clusters/clusters/workshop/cluster-config/values
 ```
 
 Familiarize yourself with the file you copied into your GitOps repo. It provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
 
-Open this file ($WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml) in an editor, and fill our the placeholder values: your wildcard DNS domain, the project path for your container registry, the username for your registry credentials, and the Kubernetes version your cluster is running.
+Open this file (`$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`) in an editor, and fill our the placeholder values: your wildcard DNS domain, the project path for your container registry, the username for your registry credentials, and the Kubernetes version your cluster is running.
 
 ### Add secrets to your configuration
 
@@ -57,6 +62,7 @@ Hmmm. These are all sensitive pieces of information, and we have no interest in 
 
 Go back to $WORKSHOP_ROOT. We are going to create a dedicated subdirectory `enc` to store this sensitive encryption stuff, and keep it out of our GitOps repo:
 ```
+cd $WORKSHOP_ROOT
 mkdir enc
 cd enc
 age-keygen -o key.txt

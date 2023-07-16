@@ -13,13 +13,13 @@ Participants need to set up the following prerequisites before attending the wor
 * Account credentials on [Tanzu Network](https://network.tanzu.vmware.com/)
 * Current CLI tools for working with the environment: kubectl, [k9s](https://k9scli.io/topics/install/), git, [github](https://cli.github.com/manual/installation), [SOPS](https://github.com/mozilla/sops/releases) and [age](https://github.com/FiloSottile/age#installation) for encrypting secrets, and [Carvel](https://carvel.dev/#install).
 
-Pre Bhakta has authored a [complete automation](infrastructure/) for setting up all of the prerequisites on Azure. If participants do not have the prereqs readily available, they are encouraged to use this setup with their Azure account.
+The workshop team has provided a [complete automation](infrastructure/) for setting up all of the prerequisites on Azure. If participants do not have the prereqs readily available, they are encouraged to use this setup with their Azure account.
 
 Participants can track their progress on the prerequisites with a local copy of [this Excel worksheet](https://github.com/tanzu-end-to-end/tap-gitops-workshop/raw/main/Prereqs.xlsx).
 
 ### Workshop Stages
 
-Participants will run the workshop in stages, where they perform a base install of TAP 1.6, and then incrementally add features and capabilities to ehe environment. The GitOps repo produced in this workshop can be re-used for further activities, such as customer demos and pilots.
+Participants will run the workshop in stages, where they perform a base install of TAP 1.6, and then incrementally add features and capabilities to the environment. The GitOps repo produced in this workshop can be re-used for further activities, such as customer demos and pilots.
 
 [**Stage 1: Perform a base install of Tanzu Application Platform**](Stage-1-Base-Install.md)
 
