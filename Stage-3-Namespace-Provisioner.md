@@ -67,7 +67,7 @@ Edit the file `$WORKSHOP_ROOT/enc/workshop-cluster-secrets.yaml`, and fill it ou
 
 Here is a command that will generate the base64 encoding that you can input for `.dockerconfigjson`
 ```bash
-kubectl create secret docker-registry registry-credentials --docker-server=**[My Registry Server]** --docker-username=**[Registry Username]** --docker-password=**[Registry Password]** --dry-run=client -o jsonpath='{.data.\.dockerconfigjson}'
+kubectl create secret docker-registry registry-credentials --docker-server=[My Registry Server] --docker-username=[Registry Username] --docker-password=[Registry Password] --dry-run=client -o jsonpath='{.data.\.dockerconfigjson}'
 ```
 
 Once you have input these values, we can SOPS-encrypt them:
@@ -78,8 +78,14 @@ sops --encrypt workshop-cluster-secrets.yaml > workshop-cluster-secrets.sops.yam
 Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted resources there.
 ```bash
 cd $WORKSHOP_ROOT
-mkdir workshop-clusters/clusters/workshop/cluster-config/general
-mv enc/workshop-cluster-secrets.sops.yaml workshop-clusters/clusters/workshop/cluster-config/general
+mkdir workshop-clusters/clusters/workshop/cluster-config/config/general
+mv enc/workshop-cluster-secrets.sops.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
+```
+
+Also, in this general folder we will add a `SecretExport` resource in the `tap-install namespace that will authorize our secrets to be imported into the developer namespaces:
+```bash
+cd $WORKSHOP_ROOT
+cp tap-gitops-workshop/templates/namespace-provisioner/secretexport.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
 Now, we will create a folder for resources that we want Namespace Provisioner to deploy in every developer namespace. This folder contains a `SecretImport` resource that will copy the secrets we added from the `tap-install` namespace to the developer namespace:
@@ -102,7 +108,7 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
            - git:
                ref: origin/main
                subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
-               url: https://github.com/<MY-REPO>/installer
+               url: https://github.com/<MY-REPO>/workshop-clusters.git
          default_parameters:
            supply_chain_service_account:
              secrets:
