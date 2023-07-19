@@ -6,7 +6,7 @@ tap_install:
     shared:
       ingress_domain: # Wildcard DNS Domain (e.g. tap.myexample.com)
       image_registry:
-        project_path: # Image registry project path (e.g. harbor.myexample.com/tap/tap-images)
+        project_path: # Image registry project path (e.g. myregistry.azurecr.io/tap/tap-images)
         username: # Registry username
 
       kubernetes_version: # Kubernetes version (e.g. 1.25.9)

@@ -63,9 +63,9 @@ cd $WORKSHOP_ROOT/enc
 cp ../tap-gitops-workshop/templates/namespace-provisioner/workshop-cluster-secrets.yaml .
 ```
 
-Edit the file `$WORKSHOP_ROOT/enc/workshop-cluster-secrets.yaml`, and fill it out with your credentials. You will enter your Github username and developer token in plain text. You will also add the base64-encoded string for your registry credentials.
+Edit the file `$WORKSHOP_ROOT/enc/workshop-cluster-secrets.yaml`, and fill it out with your credentials. You will enter your Github username and developer token in plain text. 
 
-Here is a command that will generate the base64 encoding that you can input for `.dockerconfigjson`
+You will also add the base64-encoded string for your registry credentials. They will be added to two secrets in this file, `registry-credentials` and `lsp-push-credentials`. Here is a command that will generate the base64 encoding that you can input for `.dockerconfigjson`
 ```bash
 kubectl create secret docker-registry registry-credentials --docker-server=[My Registry Server] --docker-username=[Registry Username] --docker-password=[Registry Password] --dry-run=client -o jsonpath='{.data.\.dockerconfigjson}'
 ```
@@ -115,6 +115,17 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
                - git-https
    ```
 
+Also, we will add configuration to the `tap-values.yaml` for the `local_source_proxy` component. This will allow developers to push their source code to the container registry, without needing a docker client or registry credentials on their local machine. **NOTE:** You **must** substitute the Image registry path here, with the project path of your image registry (e.g. myregistry.azurecr.io/tap).
+
+   ```yaml
+       local_source_proxy:
+         repository: <MY_REGISTRY_PROJECT_PATH>/tap-source-proxy
+         push_secret:
+           name: lsp-push-credentials
+           namespace: tap-install
+           create_export: true
+   ```
+
 Let's commit the changes to our GitOps repo, causing them to sync to our cluster.
    ```bash
    cd $WORKSHOP_ROOT/workshop-clusters
@@ -123,6 +134,35 @@ Let's commit the changes to our GitOps repo, causing them to sync to our cluster
    ```
 
 ### Use the developer namespace
+
+Now we can test the developer namespace you've created on your cluster, `developer-ns`. If you already have the TAP IDE tooling installed on your local machine, you can proceed directly into Developer Getting Started activities for [VS Code](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/getting-started-iterate-new-app-vscode.html) [IntelliJ](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/getting-started-iterate-new-app-intellij.html).
+
+Alternatively, you can run this scripted process to test using the namespace. Start by cloning an application to your local machine
+   ```bash
+   cd $WORKSHOP_ROOT
+   git clone https://github.com/Tanzu-Solutions-Engineering/tanzu-java-web-app
+   cd tanzu-java-web-app
+   export NAMESPACE=developer-ns
+   ./mvnw compile
+   ```
+
+Now, we will start the Tilt process that deploys the code to your developer namespace using a basic supply chain:
+   ```bash
+   tilt up --stream=true
+   ```
+
+The first time you run this, the process will take a few minutes to complete. Once it is done, you can access the application in your browser at https://localhost:8080. Leave Tilt running in your terminal window, and open a second terminal window where we will edit one of the source code files.
+
+   ```bash
+   vim src/main/java/com/example/springboot/HelloController.java
+   ```
+
+Change the string that is returned by the controller from `Greetings from Spring Boot + Tanzu!` to something else. Save your changes, exit the edit, and trigger a compile.
+   ```bash
+   ./mvnw compile
+   ```
+
+If you go back to the terminal window where Tilt is running, you will see that it picks up your changes, and patches the running container in your developer namespace in seconds. Reload your browser window at https://localhost:8080, and you will see the result of your code changes.
 
 ## Hints
 
@@ -166,4 +206,12 @@ tap_install:
         supply_chain_service_account:
           secrets:
             - git-https
+
+    local_source_proxy:
+      repository: <MY_REGISTRY_PROJECT_PATH>/tap-source-proxy
+      push_secret:
+        name: lsp-push-credentials
+        namespace: tap-install
+        create_export: true
+
 ```
