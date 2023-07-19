@@ -5,8 +5,26 @@ In stage 1, we will perform a minimal install of a single-cluster TAP environmen
 ### Base working directory
 
 Create a base working directory on your local machine for these workshop activities. Assign that directory path to the environment variable WORKSHOP_ROOT
+
 ```bash
 export WORKSHOP_ROOT=/path/to/my/basedir
+```
+
+### (Optional) Authenticate to GitHub & Configure Git
+
+Create a [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and follow the commands below to authenticate and configure Git.
+
+```bash
+touch .githubtoken
+vim .githubtoken # save GitHub auth token into the file
+gh auth login --with-token <.githubtoken
+rm .githubtoken
+
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+
+# temporarily remembers git creds in memory
+git config --global credential.helper cache
 ```
 
 ### Initialize your platform GitOps repo
@@ -16,6 +34,7 @@ Here we will create the GitOps repo that records the configuration of your TAP i
 First, download the base template for your repo from TanzuNet. Go the latest release page for Tanzu Application Platform, and download `tanzu-gitops-ri-0.2.0.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
 
 Initialize the Git repo on your local machine:
+
 ```bash
 cd $WORKSHOP_ROOT
 mkdir -p workshop-clusters
@@ -34,6 +53,7 @@ gh repo create
 The repo we have created can store the configuration for **all** of your TAP clusters. Each cluster will have its own subfolder in the GitOps repo where its configuration is stored. Let's create the cluster subfolder for `workshop`, which will be the name of our workshop cluster.
 
 ```bash
+# ignore the "Next steps" that are outputted
 ./setup-repo.sh workshop sops
 ```
 
@@ -44,6 +64,7 @@ The `sops` argument indicates that we will be using SOPS Secret Management (with
 ### Create a starter configuration for your cluster
 
 Clone this repo into your workshop root directory. It won't be part of your GitOps install, but it contains some template files we can copy into your repo to get you started quickly:
+
 ```bash
 cd $WORKSHOP_ROOT
 git clone https://github.com/tanzu-end-to-end/tap-gitops-workshop
@@ -52,7 +73,12 @@ cp tap-gitops-workshop/templates/install/tap-values.yaml workshop-clusters/clust
 
 Familiarize yourself with the file you copied into your GitOps repo. It provides the `tap-values` configuration for your cluster, which you will recognize if you've installed TAP before. The format is slightly different, so don't just copy an existing `tap-values.yaml` as-is here. 
 
-Open this file (`$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`) in an editor, and fill our the placeholder values: your wildcard DNS domain, the project path for your container registry, the username for your registry credentials, and the Kubernetes version your cluster is running.
+Open this file (`$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`) in an editor, and fill our the placeholder values:
+
+* Wildcard DNS domain
+* Project path for the container registry
+* Username for the container registry
+* Kubernetes version
 
 ### Add secrets to your configuration
 
@@ -61,6 +87,7 @@ We're almost ready to install TAP, but we're still missing some key configuratio
 Hmmm. These are all sensitive pieces of information, and we have no interest in committing them as plain text to our GitOps repo. So we'll be using our secrets management tooling to encrypt these secrets before committing them, and we'll supply the decryption key to our cluster so that it knows how to decode them.
 
 Go back to $WORKSHOP_ROOT. We are going to create a dedicated subdirectory `enc` to store this sensitive encryption stuff, and keep it out of our GitOps repo:
+
 ```bash
 cd $WORKSHOP_ROOT
 mkdir enc
@@ -78,12 +105,14 @@ We used `age` to generate an encryption key for our repo (it's `key.txt`, don't 
 Open these two files, `tanzu-sync-values.yaml` and `tap-sensitive-values.yaml`, in an editor. Fill out these files as described with your Github developer token, registry credentials, and TanzuNet credentials in plain text. You will also be adding your encryption key here, which you can get by typing `cat key.txt`.
 
 Now we will encrypt the files:
+
 ```bash
 sops --encrypt tanzu-sync-values.yaml > tanzu-sync-values.sops.yaml
 sops --encrypt tap-sensitive-values.yaml > tap-sensitive-values.sops.yaml
 ```
 
 The encrypted files, with the `.sops.yaml` suffix, are safe to store in your GitOps repo, so let's move them there:
+
 ```bash
 mv tanzu-sync-values.sops.yaml ../workshop-clusters/clusters/workshop/tanzu-sync/app/sensitive-values
 mv tap-sensitive-values.sops.yaml ../workshop-clusters/clusters/workshop/cluster-config/values
@@ -98,13 +127,14 @@ OK, we've got our cluster configuration the way we want it. Let's commit to Git,
 ```bash
 cd $WORKSHOP_ROOT/workshop-clusters
 git add . && git commit -m "Add workshop cluster"
-git push -u origin main
+git push -u origin main 
 
 cd clusters/workshop
 ./tanzu-sync/scripts/configure.sh
 ```
 
 Now, let's commit again to pick up the assets that were created by the configuration script.
+
 ```bash
 git add cluster-config/ tanzu-sync/
 git commit -m "Configure install of TAP 1.6"
@@ -112,6 +142,7 @@ git push
 ```
 
 We're ready to install! Please make sure that your kubeconfig is pointed at the cluster where you want to install TAP. Now, we can run the deployment script, which will sync the cluster to the GitOps repo, and kick off the install.
+
 ```bash
 ./tanzu-sync/scripts/deploy.sh
 ```

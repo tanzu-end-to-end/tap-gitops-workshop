@@ -14,6 +14,11 @@ output "azure_container_registry_password" {
   sensitive = true
 }
 
+output "azurerm_kubernetes_cluster_version" {
+  value = azurerm_kubernetes_cluster.aks.kubernetes_version
+  description = "The Kubernetes version"
+}
+
 output "ssh_info" {
   value = "ssh ${var.ssh_username}@${azurerm_linux_virtual_machine.jump-server-vm.public_ip_address} -i ${var.ssh_private_key_path} -o StrictHostKeyChecking=no"
   description = "The ssh information for the jump server"

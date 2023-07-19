@@ -40,6 +40,16 @@ Utilizing Terraform conventions, make a copy `terraform.tfvars.example` and remo
 terraform output -raw azure_container_registry_password
 ```
 
+## Infrastructure Information
+
+During the installation of this workshop, some infrastructure information will be required. To obtain it, run the following commands to get AKS and ACR information.
+
+```console
+terraform output
+
+terraform output -raw azure_container_registry_password
+```
+
 ### Jumpbox
 
 The jumpbox contains a variety of tools as well as the kubeconfig for the AKS cluster. Installed tools:
