@@ -83,18 +83,11 @@ export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# publ
 sops --encrypt workshop-cluster-secrets.yaml > workshop-cluster-secrets.sops.yaml
 ```
 
-Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted resources there.
+In the general folder for user-provided resources, will copy our SOPS-encrypted values, add a `SecretExport` resource in the `tap-install namespace that will authorize our secrets to be imported into the developer namespaces:
 
 ```bash
 cd $WORKSHOP_ROOT
-mkdir workshop-clusters/clusters/workshop/cluster-config/config/general
 mv enc/workshop-cluster-secrets.sops.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
-```
-
-Also, in this general folder we will add a `SecretExport` resource in the `tap-install namespace that will authorize our secrets to be imported into the developer namespaces:
-
-```bash
-cd $WORKSHOP_ROOT
 cp tap-gitops-workshop/templates/namespace-provisioner/secretexport.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
