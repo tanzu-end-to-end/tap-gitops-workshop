@@ -70,10 +70,10 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
 Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`.
 
 ```yaml
-      tap_gui:
-        app_config:
-          auth:
-          allowGuestAccess: true
+    tap_gui:
+      app_config:
+        auth:
+        allowGuestAccess: true
 ```
 
 This allows guest access to TAP GUI. This was on by default prior to TAP 1.6 and is a breaking change.
