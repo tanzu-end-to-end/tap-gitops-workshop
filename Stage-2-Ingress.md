@@ -45,12 +45,18 @@ export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# publ
 sops --encrypt certificate.yaml > certificate.sops.yaml
 ```
 
-Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted resources there.
+Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted certificate secret there.
 
 ```bash
 cd $WORKSHOP_ROOT
 mkdir workshop-clusters/clusters/workshop/cluster-config/config/general
 mv enc/certificate.sops.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
+```
+
+We will copy some additional resources we want to deploy into this general folder: the namespace where our certificate secret will live, and a [TlsCertificateDelegation](https://projectcontour.io/docs/1.25/config/tls-delegation/) resource that instructs Contour to use this wildcard certificate to terminate HTTPS requests to the TAP cluster:
+
+```bash
+cp tap-gitops-workshop/templates/ingress/* workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
 Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file, and set the `shared.ingress_domain` field to your wildcard domain:
