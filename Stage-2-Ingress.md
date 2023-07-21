@@ -40,16 +40,23 @@ kubectl create secret tls tls -n contour-tls --cert=workshopx-fullchain.pem --ke
 This certificate file has sensitive private key data, so we need to encrypt it before adding it to our cluster's GitOps repo.
 
 ```bash
+cd $WORKSHOP_ROOT/enc
 export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
 sops --encrypt certificate.yaml > certificate.sops.yaml
 ```
 
-Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted resources there.
+Let's create a general folder in our GitOps repo for Kubernetes resources that we want to sync to our workshop cluster, and copy our SOPS-encrypted certificate secret there.
 
 ```bash
 cd $WORKSHOP_ROOT
 mkdir workshop-clusters/clusters/workshop/cluster-config/config/general
 mv enc/certificate.sops.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
+```
+
+We will copy some additional resources we want to deploy into this general folder: the namespace where our certificate secret will live, and a [TlsCertificateDelegation](https://projectcontour.io/docs/1.25/config/tls-delegation/) resource that instructs Contour to use this wildcard certificate to terminate HTTPS requests to the TAP cluster:
+
+```bash
+cp tap-gitops-workshop/templates/ingress/* workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
 Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file, and set the `shared.ingress_domain` field to your wildcard domain:
@@ -63,10 +70,10 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
 Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`.
 
 ```yaml
-      tap_gui:
-        app_config:
-          auth:
-          allowGuestAccess: true
+    tap_gui:
+      app_config:
+        auth:
+        allowGuestAccess: true
 ```
 
 This allows guest access to TAP GUI. This was on by default prior to TAP 1.6 and is a breaking change.
