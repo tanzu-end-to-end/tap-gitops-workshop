@@ -4,11 +4,11 @@ tap_install:
     profile: full
 
     shared:
-      ingress_domain: # Wildcard DNS Domain (e.g. tap.myexample.com)
+      ingress_domain: tap.example.com
+      ingress_issuer: ""
       image_registry:
         project_path: # Image registry project path (e.g. myregistry.azurecr.io/tap/tap-images)
         username: # Registry username
-
       kubernetes_version: # Kubernetes version (e.g. 1.25.9)
 
     ceip_policy_disclosed: true
@@ -18,3 +18,17 @@ tap_install:
       - learningcenter.tanzu.vmware.com
       - workshops.learningcenter.tanzu.vmware.com
       - eventing.tanzu.vmware.com
+
+    tap_gui:
+      service_type: ClusterIP
+      ingressEnabled: "true"
+      app_config:
+        app:
+          baseUrl: https://tap-gui.tap.example.com
+        backend:
+          baseUrl: https://tap-gui.tap.example.com
+          cors:
+            origin: https://tap-gui.tap.example.com
+        auth:
+          allowGuestAccess: true
+          environment: development

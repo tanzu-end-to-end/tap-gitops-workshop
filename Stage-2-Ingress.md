@@ -62,21 +62,23 @@ cp tap-gitops-workshop/templates/ingress/* workshop-clusters/clusters/workshop/c
 Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file, and set the `shared.ingress_domain` field to your wildcard domain:
 ```yaml
     shared:
-      ingress_domain: workshopx.tap-pilot.net
+      ingress_domain: workshopx.tap-pilot.com
 ```
 
-## Configure TAP GUI Guest Access in tap-values.yaml
-
-Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml`.
-
+Also, check the `tap_gui` configuration. You will see three fields that need to be updated to use your wildcard domain:
 ```yaml
     tap_gui:
       app_config:
-        auth:
-        allowGuestAccess: true
+        app:
+          baseUrl: https://tap-gui.workshopx.tap-pilot.com
+        backend:
+          baseUrl: https://tap-gui.workshopx.tap-pilot.com
+          cors:
+            origin: https://tap-gui.workshopx.tap-pilot.com
 ```
 
-This allows guest access to TAP GUI. This was on by default prior to TAP 1.6 and is a breaking change.
+
+## Configure TAP GUI Guest Access in tap-values.yaml
 
 Let's commit the changes to our GitOps repo, causing them to sync to our cluster.
 
