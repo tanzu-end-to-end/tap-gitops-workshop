@@ -4,16 +4,16 @@ shopt -s nocasematch
 
 echo " === login.sh === "
 
-# GitHub
 if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
-  # use GitHub token for git auth
-
-  echo "export GH_USERNAME=\"$GH_USERNAME\"" >.envrc
-  echo "export GH_TOKEN=\"$GH_TOKEN\"" >.envrc
-  direnv allow
-  gh auth login --hostname github.com
-
-  # NOTE: we can't dynamically add the priv_key via cloud-init so delete since we don't need it
+  # remove private keys since user opted into GitHub Auth
   shred ~/.ssh/priv_key
   rm ~/.ssh/priv_key
+
+  # use GitHub token for git auth via the environment
+  echo "export GH_USERNAME=\"$GH_USERNAME\"" >> .envrc
+  echo "export GH_TOKEN=\"$GH_TOKEN\"" >> .envrc
+  direnv allow
+
+  # validate auth token has required scopes
+  gh auth status
 fi

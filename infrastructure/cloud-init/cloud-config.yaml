@@ -47,6 +47,7 @@ runcmd:
   - |
     su - ${username} << EOM
       GIT_AUTH_VIA_SSH_KEY=${git_auth_via_ssh_key} \
+        GH_USERNAME="${gh_username}" \
         GH_TOKEN="${gh_token}" \
         SSH_PRIVATE_KEY_PASSPHRASE_PROTECTED=${ssh_private_key_passphrase_protected} \
         /usr/local/bin/tap-gitops-workshop-scripts/login.sh
