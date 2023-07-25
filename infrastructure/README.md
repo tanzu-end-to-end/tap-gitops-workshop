@@ -34,6 +34,8 @@ If you need to generate a new key, here's an example that will create a new keyp
 ssh-keygen -m PEM -t rsa -b 4096 -f "./azure-workshop-ssh" -C "$USER"
 ```
 
+**NOTE:** if you choose to use a GitHub Personal Access Token, the minimum required scopes for the `gh` CLI are `repo`(all) and `read:org`. You can add scopes for your tokens in the [GitHub Token Settings](https://github.com/settings/tokens/).
+
 ## Build Infrastructure
 
 1. [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli)
