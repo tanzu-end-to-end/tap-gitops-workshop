@@ -20,21 +20,25 @@ Utilizing Terraform conventions, make a copy `terraform.tfvars.example` and remo
 
 - `git_auth_via_ssh_key` (bool) - On whether to utilize git authentication via SSH keys (true) or personal access tokens (false)
 - `tanzu_network_refresh_token` (string) - The Tanzu network refresh token utilized to download software
-- `ssh_private_key_path` (string) - The path to the private key. Used to SSH into the jumpbox and also the SSH key used for git authentication if `git_auth_via_ssh_key` is set to true
+- `ssh_private_key_path` (string) - The path to the private key.  
+Used to SSH into the jumpbox.  
+Also used for git authentication if `git_auth_via_ssh_key` is set to true.  
+    
+  **NOTE:** For Azure, you must use an RSA SSH key, and it's recommended that your key indicate your desired SSH username (not email) or you may have validation issues with the azure terraform module.  
+  If you need to generate a new key, here's an example that will create a new keypair in your current directory:
+  ```shell
+  ssh-keygen -m PEM -t rsa -b 4096 -f "./azure-workshop-ssh" -C "$USER"
+  ```
 - `ssh_private_key_passphrase_protected` (bool) - On whether the SSH key has a passphrase (true) or not (false)
 - `ssh_public_key_path` (string) - The path to the public SSH key. Used in the setup of the jumpbox and must be manually setup on a Git provider account if `git_auth_via_ssh_key` is set to true
 - `ssh_username` (string) - The name used when SSH'ing into the jumpbox
 
-- `gh_username` (string) - Username of the GitHub account. Required value if GitHub personal access token is being utilized by setting `git_auth_via_ssh_key` to false
-- `gh_token` (string) - Value of the GitHub personal access token. Required value if GitHub personal access token is being utilized by setting `git_auth_via_ssh_key` to false
-
-**NOTE:** for Azure, you must use an RSA SSH key, and it's recommended that your key indicate your desired SSH username (not email) or you may have validation issues with the azure terraform module.
-If you need to generate a new key, here's an example that will create a new keypair in your current directory:
-```shell
-ssh-keygen -m PEM -t rsa -b 4096 -f "./azure-workshop-ssh" -C "$USER"
-```
-
-**NOTE:** if you choose to use a GitHub Personal Access Token, the minimum required scopes for the `gh` CLI are `repo`(all) and `read:org`. You can add scopes for your tokens in the [GitHub Token Settings](https://github.com/settings/tokens/).
+- `gh_username` (string) - Username of the GitHub account.  
+Required value if `git_auth_via_ssh_key` is false
+- `gh_token` (string) - Value of the GitHub personal access token.  
+Required value if `git_auth_via_ssh_key` is false  
+    
+  **NOTE:** If you choose to use a GitHub Personal Access Token, the minimum required scopes for the `gh` CLI are `repo` (all) and `read:org`. You can add scopes for your tokens in the [GitHub Token Settings](https://github.com/settings/tokens/).
 
 ## Build Infrastructure
 
