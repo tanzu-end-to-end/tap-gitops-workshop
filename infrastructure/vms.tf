@@ -7,7 +7,7 @@ resource "azurerm_linux_virtual_machine" "jump-server-vm" {
 
   custom_data = base64encode(templatefile("./cloud-init/cloud-config.yaml", {
     username                             = var.ssh_username
-    gh_username                          = var.gh_username != null ? var.gh_token : ""
+    gh_username                          = var.gh_username != null ? var.gh_username : ""
     gh_token                             = var.gh_token != null ? var.gh_token : ""
     tanzu_registry_username              = var.tanzu_registry_username
     tanzu_registry_password              = var.tanzu_registry_password
