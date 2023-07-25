@@ -75,7 +75,7 @@ Now, we will add a workload to the Build cluster to run through the supply chain
 
 ```bash
 cd $WORKSHOP_ROOT
-cp tap-gitops-workshop/templates/supply-chain/workloads workshop-clusters/clusters/workshop/cluster-config/
+cp -R tap-gitops-workshop/templates/supply-chain/workloads workshop-clusters/clusters/workshop/cluster-config/config
 ```
 
 Let's commit the changes to our GitOps repo, causing them to sync to our cluster.
