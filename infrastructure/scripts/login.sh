@@ -2,6 +2,8 @@
 set -e -o pipefail
 shopt -s nocasematch
 
+echo " === login.sh === "
+
 # GitHub
 if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
   # use GitHub token for git auth

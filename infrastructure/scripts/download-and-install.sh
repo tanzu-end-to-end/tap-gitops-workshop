@@ -2,6 +2,8 @@
 set -e -o pipefail
 shopt -s nocasematch
 
+echo " === download-and-install.sh === "
+
 # Download and install Cluster Essentials
 TAP_VERSION_YAML="/usr/local/bin/tap-gitops-workshop-scripts/tap-version.yaml"
 
