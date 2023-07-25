@@ -28,6 +28,11 @@ Utilizing Terraform conventions, make a copy `terraform.tfvars.example` and remo
 - `gh_username` (string) - Username of the GitHub account. Required value if GitHub personal access token is being utilized by setting `git_auth_via_ssh_key` to false
 - `gh_token` (string) - Value of the GitHub personal access token. Required value if GitHub personal access token is being utilized by setting `git_auth_via_ssh_key` to false
 
+**NOTE:** for Azure, you must use an RSA SSH key, and it's recommended that your key indicate your desired SSH username (not email) or you may have validation issues with the azure terraform module.
+If you need to generate a new key, here's an example that will create a new keypair in your current directory:
+```shell
+ssh-keygen -m PEM -t rsa -b 4096 -f "./azure-workshop-ssh" -C "$USER"
+```
 
 ## Build Infrastructure
 
@@ -76,7 +81,9 @@ After SSH'ing into the jumpbox, if `git_auth_via_ssh_key` is set to true, the fo
   ssh-add ~/.ssh/priv_key
 ```
 
-NOTE: the jumpbox SSH keys and git provider SSH keys are the same
+**NOTE:** the jumpbox SSH keys and git provider SSH keys are the same
+
+You may need to add your public key in your [GitHub account settings](https://github.com/settings/keys) if you generated a new key specifically for this workshop.
 
 ## Cloud-init
 
