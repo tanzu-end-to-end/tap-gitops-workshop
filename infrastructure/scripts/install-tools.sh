@@ -19,6 +19,7 @@ wget -O- https://carvel.dev/install.sh | sudo bash
 
 # direnv
 sudo apt-get install direnv
+direnv hook bash >> ~/.bashrc
 eval "$(direnv hook bash)"
 
 # git
