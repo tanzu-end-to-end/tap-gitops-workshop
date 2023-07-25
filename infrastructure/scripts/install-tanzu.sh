@@ -2,7 +2,7 @@
 set -e -o pipefail
 shopt -s nocasematch
 
-echo " === download-and-install.sh === "
+echo " === install-tanzu.sh === "
 
 # pivnet
 pivnet login --api-token="$TANZU_NETWORK_REFRESH_TOKEN"

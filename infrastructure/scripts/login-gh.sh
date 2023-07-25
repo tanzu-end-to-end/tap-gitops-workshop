@@ -2,7 +2,7 @@
 set -e -o pipefail
 shopt -s nocasematch
 
-echo " === login.sh === "
+echo " === login-gh.sh === "
 
 if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
   # remove private keys since user opted into GitHub Auth
