@@ -17,6 +17,3 @@ if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
   shred ~/.ssh/priv_key
   rm ~/.ssh/priv_key
 fi
-
-# pivnet
-pivnet login --api-token="$TANZU_NETWORK_REFRESH_TOKEN"

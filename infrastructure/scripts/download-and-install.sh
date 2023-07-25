@@ -4,6 +4,9 @@ shopt -s nocasematch
 
 echo " === download-and-install.sh === "
 
+# pivnet
+pivnet login --api-token="$TANZU_NETWORK_REFRESH_TOKEN"
+
 # Download and install Cluster Essentials
 TAP_VERSION_YAML="/usr/local/bin/tap-gitops-workshop-scripts/tap-version.yaml"
 

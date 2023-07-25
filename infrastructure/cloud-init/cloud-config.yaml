@@ -46,15 +46,15 @@ runcmd:
     EOM
   - |
     su - ${username} << EOM
-      TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}" \
-        GIT_AUTH_VIA_SSH_KEY=${git_auth_via_ssh_key} \
+      GIT_AUTH_VIA_SSH_KEY=${git_auth_via_ssh_key} \
         GH_TOKEN="${gh_token}" \
         SSH_PRIVATE_KEY_PASSPHRASE_PROTECTED=${ssh_private_key_passphrase_protected} \
         /usr/local/bin/tap-gitops-workshop-scripts/login.sh
     EOM
   - |
     su - ${username} << EOM
-      TANZU_REGISTRY_USERNAME="${tanzu_registry_username}" \
+      TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}" \
+        TANZU_REGISTRY_USERNAME="${tanzu_registry_username}" \
         TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}" \
         /usr/local/bin/tap-gitops-workshop-scripts/download-and-install.sh
     EOM
