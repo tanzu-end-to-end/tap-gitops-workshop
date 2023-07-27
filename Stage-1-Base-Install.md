@@ -31,14 +31,14 @@ git config --global credential.helper cache
 
 Here we will create the GitOps repo that records the configuration of your TAP install. All updates to the platform will be made to this repo, which will then propagate out to your installed environment.
 
-First, download the base template for your repo from TanzuNet. Go the latest release page for Tanzu Application Platform, and download `tanzu-gitops-ri-0.2.0.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
+First, download the base template for your repo from TanzuNet. Go the latest release page for Tanzu Application Platform, and download `tanzu-gitops-ri-0.2.5.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
 
 Initialize the Git repo on your local machine:
 
 ```bash
 cd $WORKSHOP_ROOT
 mkdir -p workshop-clusters
-tar xvf tanzu-gitops-ri-0.2.0.tgz -C workshop-clusters
+tar xvf tanzu-gitops-ri-0.2.5.tgz -C workshop-clusters
 cd workshop-clusters
 git init -b main
 git add . && git commit -m "Initialize Tanzu GitOps RI"
