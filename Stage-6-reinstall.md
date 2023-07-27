@@ -15,8 +15,8 @@ First, let's move all of our dependent resources into their own directory, outsi
 ```bash
 cd $WORKSHOP_ROOT
 mkdir workshop-clusters/clusters/workshop/cluster-config/dependent-resources
-mv workshop-clusters/clusters/workshop/cluster-config/general/tls-certificate-delegation.yaml workshop-clusters/clusters/workshop/cluster-config/dependent-resources
-mv workshop-clusters/clusters/workshop/cluster-config/workloads workshop-clusters/clusters/workshop/cluster-config/dependent-resources
+mv workshop-clusters/clusters/workshop/cluster-config/config/general/tls-certificate-delegation.yaml workshop-clusters/clusters/workshop/cluster-config/dependent-resources
+mv workshop-clusters/clusters/workshop/cluster-config/config/workloads workshop-clusters/clusters/workshop/cluster-config/dependent-resources
 ```
 
 Now, we will install the kapp that will sync the dependent-resources folder to our cluster. We will put it in the `tanzu-sync` namespace to sit alongside our GitOps installer kapp.
