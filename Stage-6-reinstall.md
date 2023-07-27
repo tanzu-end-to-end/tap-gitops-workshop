@@ -55,7 +55,7 @@ git push -u origin main
 Now, we have a cluster configuration that is idempotent and can be safely deleted. So, let's uninstall TAP:
 
 ```bash
-kubectl delete app tanzu-sync -n default
+kapp delete -a tanzu-sync -n default
 ```
 
 Using a tool like k9s, you can monitor the progress of the `pkgi` resources in the `tap-install` directory, as the TAP components are sequentially uninstalled.
@@ -66,6 +66,7 @@ Once the uninstall process is complete, you have a clean cluster, and you can re
 
 ```bash
 cd $WORKSHOP_ROOT/workshop-clusters/clusters/workshop
+export SOPS_AGE_KEY=$(cat ../../../enc/key.txt)
 ./tanzu-sync/scripts/deploy.sh
 ```
 
