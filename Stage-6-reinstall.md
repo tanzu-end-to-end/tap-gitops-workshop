@@ -22,7 +22,7 @@ mv workshop-clusters/clusters/workshop/cluster-config/config/workloads workshop-
 Now, we will install the kapp that will sync the dependent-resources folder to our cluster. We will put it in the `tanzu-sync` namespace to sit alongside our GitOps installer kapp.
 
 ```bash
-cp templates/reinstall/kapp-dependent-resources.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
+cp tap-gitops-workshop/templates/reinstall/kapp-dependent-resources.yaml workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
 **NOTE:** You **must** edit this resource and replace the placeholder text with your own Github Org name. This will point our new kapp at your repo, and sync your dependent-resources to the cluster:
