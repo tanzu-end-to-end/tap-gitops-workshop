@@ -95,3 +95,5 @@ git push -u origin main
 ### Access TAP GUI Via The Browser
 
 From your browser, navigate to [https://tap-gui.<ingress_domain>](https://tap-gui.<ingress_domain>) and verify you can see the TAP GUI.
+
+## [Next Stage: Add Namespace Provisioner >>](Stage-3-Namespace-Provisioner.md)

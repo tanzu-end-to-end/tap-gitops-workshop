@@ -86,4 +86,4 @@ git add . && git commit -m "Added scanning and testing supply chain"
 git push -u origin main
 ```
 
-
+## [Next Stage: Customize TAP GUI>>](Stage-5-Customize-TAP-GUI.md)

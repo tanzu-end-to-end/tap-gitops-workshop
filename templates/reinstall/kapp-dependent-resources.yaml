@@ -1,0 +1,23 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: dependent-resources
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+spec:
+  serviceAccountName: sync-sa
+  fetch:
+    - git:
+        ref: origin/main
+        url: https://github.com/<MY-GITHUB-ORG>/installer
+        subPath: clusters/workshop/cluster-config/dependent-resources
+  template:
+    - sops:
+        age:
+          privateKeysSecretRef:
+            name: sync-age-identity
+    - ytt: {}
+  deploy:
+    - kapp:
+        rawOptions: ["--dangerous-allow-empty-list-of-resources=true"]

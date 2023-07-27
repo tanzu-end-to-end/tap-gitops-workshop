@@ -220,3 +220,5 @@ tap_install:
         create_export: true
 
 ```
+
+## [Next Stage: Enable the Scanning and Testing Supply Chain>>](Stage-4-Scanning-Testing.md)
