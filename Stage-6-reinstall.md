@@ -28,7 +28,11 @@ cp tap-gitops-workshop/templates/reinstall/kapp-dependent-resources.yaml worksho
 **NOTE:** You **must** edit this resource and replace the placeholder text with your own Github Org name. This will point our new kapp at your repo, and sync your dependent-resources to the cluster:
 
 ```yaml
-        url: https://github.com/<MY-GITHUB-ORG>/installer
+        url: https://github.com/<MY-GITHUB-ORG>/workshop-clusters
+```
+
+```bash
+vim workshop-clusters/clusters/workshop/cluster-config/config/general/kapp-dependent-resources.yaml
 ```
 
 If you inspect the kapp, you will notice this annotation:
