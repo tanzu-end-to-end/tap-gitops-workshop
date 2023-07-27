@@ -38,6 +38,14 @@ kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
 
 This tells kapp-controller not to sync the dependent-resources until after the kapp with label `pkgi` has finished installing. `pkgi` is the arbitrary label associated with the GitOps installer app. We've also added configuration to the kapp that allows you to add SOPS-encrypted resources to the `dependent-resources` subdirectory, if you so desire.
 
+Let's commit the changes to our GitOps repo, causing them to sync to our cluster.
+
+```bash
+cd $WORKSHOP_ROOT/workshop-clusters
+git add . && git commit -m "Added scanning and testing supply chain"
+git push -u origin main
+```
+
 ## Blow it Away!
 
 Now, we have a cluster configuration that is idempotent and can be safely deleted. So, let's uninstall TAP:
