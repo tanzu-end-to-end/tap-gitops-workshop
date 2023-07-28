@@ -29,7 +29,7 @@ Participants will run the workshop in stages, where they perform a base install 
 
 [**Stage 4: Configure Scanning-Testing Supply Chain**](Stage-4-Scanning-Testing.md)
 
-[**Stage 5: Customize TAP GUI**](Stage-5-Customize-TAP-GUI.md)
+[**Stage 5: Customize TAP Developer Portal**](Stage-5-Customize-TDP.md)
 
 [**Stage 6: Blow it Away! Reinstall!**](Stage-6-reinstall.md)
 
