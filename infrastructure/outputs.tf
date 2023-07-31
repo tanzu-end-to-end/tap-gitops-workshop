@@ -1,4 +1,4 @@
-output "azure_container_fqdn" {
+output "azure_container_registry_fqdn" {
   value = azurerm_container_registry.acr.login_server
   description = "The login server for Azure Container Registry"
 }
