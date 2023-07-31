@@ -28,7 +28,7 @@ Take the value in the "External-IP" column, and enter it into Column E of the wo
 
 Create a certificates directory:
 ```bash
-mkdir $WORKSHOOP_ROOT/certificates
+mkdir $WORKSHOP_ROOT/certificates
 ```
 Go to the spreadsheet, and download the certificate (fullchain.pem) and the private key (privkey.pem) in columns B and C for your domain. Copy these 2 files into the `certificates` directory you created.
 
