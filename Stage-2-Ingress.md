@@ -34,7 +34,7 @@ Go to the spreadsheet, and download the certificate (fullchain.pem) and the priv
 
 Now, let's create a secret for this certificate that can be installed onto our cluster. Be sure to replace the filenames in this command with the filenames of your certificate files.
 ```bash
-kubectl create secret tls tls -n contour-tls --cert=workshopx-fullchain.pem --key=workshopx-privkey.pem --dry-run=client -o yaml > ../enc/certificate.yaml
+kubectl create secret tls tls -n contour-tls --cert=workshopx-fullchain.pem --key=workshopx-privkey.pem --dry-run=client -o yaml > $WORKSHOP_ROOT/enc/certificate.yaml
 ```
 
 This certificate file has sensitive private key data, so we need to encrypt it before adding it to our cluster's GitOps repo.
