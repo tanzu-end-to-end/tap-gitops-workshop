@@ -67,20 +67,12 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
     cnrs:
       default_tls_secret: contour-tls/tls
       domain_template: "{{.Name}}-{{.Namespace}}.{{.Domain}}"
-```
 
-Also, check the `tap_gui` configuration. You will see three fields that need to be updated to use your wildcard domain:
-```yaml
     tap_gui:
-      app_config:
-        app:
-          baseUrl: https://tap-gui.workshopx.tap-pilot.com
-        backend:
-          baseUrl: https://tap-gui.workshopx.tap-pilot.com
-          cors:
-            origin: https://tap-gui.workshopx.tap-pilot.com
+      tls:
+        namespace: contour-tls
+        secretName: tls
 ```
-
 
 ## Configure TAP GUI Guest Access in tap-values.yaml
 

@@ -23,12 +23,6 @@ tap_install:
       service_type: ClusterIP
       ingressEnabled: "true"
       app_config:
-        app:
-          baseUrl: https://tap-gui.tap.example.com
-        backend:
-          baseUrl: https://tap-gui.tap.example.com
-          cors:
-            origin: https://tap-gui.tap.example.com
         auth:
           allowGuestAccess: true
           environment: development
