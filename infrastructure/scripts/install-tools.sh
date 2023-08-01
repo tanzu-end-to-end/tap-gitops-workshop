@@ -66,5 +66,8 @@ rm pivnet-linux-amd64-3.0.1
 # tilt
 curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
 
+# tree
+sudo apt install tree
+
 # yq
 brew install yq
