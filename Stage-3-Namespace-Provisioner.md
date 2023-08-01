@@ -24,6 +24,8 @@ Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/wor
     namespace_provisioner:
       controller: false
       sync_period: 30s
+      # configure a repo that defines which namespaces should exist
+      # for simplicity, it's the same one we have been using
       gitops_install:
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
@@ -106,22 +108,10 @@ cd $WORKSHOP_ROOT
 cp -R tap-gitops-workshop/templates/namespace-provisioner/namespace-resources workshop-clusters/clusters/workshop/cluster-config/namespace-provisioner
 ```
 
-Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file again, and configure the namespace provisioner to look for the new `namespace-resources` directory we just created, and to add the Git secret we imported to the namespace's default service account. **NOTE:** You **must** substitute the Github URL here, with the URL of your GitOps repo.
+Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file again. Add sections in the namespace provisioner configuration to look for the new `namespace-resources` directory we just created, and to add the Git secret we imported to the namespace's default service account. **NOTE:** You **must** substitute the Github URL here, with the URL of your GitOps repo.
 
 ```yaml
     namespace_provisioner:
-      controller: false
-      sync_period: 30s
-      # configure a repo that defines which namespaces should exist
-      # for simplicity, it's the same one we have been using
-      gitops_install:
-        url: https://github.com/<MY_GH_USER>/workshop-clusters.git
-        ref: origin/main
-        subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
-        secretRef:
-          name: sync-git
-          namespace: tanzu-sync
-          create_export: true        
       additional_sources:
         # additional sources points to the resources we want to fill those namespaces with
         - git:
