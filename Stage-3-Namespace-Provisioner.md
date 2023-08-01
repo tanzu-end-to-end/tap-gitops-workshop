@@ -73,7 +73,10 @@ cd $WORKSHOP_ROOT/enc
 cp ../tap-gitops-workshop/templates/namespace-provisioner/workshop-cluster-secrets.yaml .
 ```
 
-Edit the file `$WORKSHOP_ROOT/enc/workshop-cluster-secrets.yaml`, and fill it out with your credentials. You will enter your Github username and developer token in plain text. 
+Edit the file `$WORKSHOP_ROOT/enc/workshop-cluster-secrets.yaml`, and fill it out with your credentials. You will enter your Github username and developer token in plain text.
+
+This file contains an exported Secret named `tap-install/git-https`.
+In this example, this secret is equivalent to `tanzu-sync/sync-git`, but we could use a different credential for developer workloads and even decide to pull those configurations from different repositories than our control repo for TAP.
 
 You will also add the base64-encoded string for your registry credentials. They will be added to two secrets in this file, `registry-credentials` and `lsp-push-credentials`. Here is a command that will generate the base64 encoding that you can input for `.dockerconfigjson`
 ```bash
@@ -109,22 +112,25 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
     namespace_provisioner:
       controller: false
       sync_period: 30s
+      # configure a repo that defines which namespaces should exist
+      # for simplicity, it's the same one we have been using
       gitops_install:
+        url: https://github.com/<MY_GH_USER>/workshop-clusters.git
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
-        url: https://github.com/<MY-REPO>/workshop-clusters.git
         secretRef:
           name: sync-git
           namespace: tanzu-sync
           create_export: true        
       additional_sources:
+        # additional sources points to the resources we want to fill those namespaces with
         - git:
+            url: https://github.com/<MY_GH_USER>/workshop-clusters.git
             ref: origin/main
             subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
-            url: https://github.com/<MY-REPO>/workshop-clusters.git
             secretRef:
-              name: sync-git
-              namespace: tanzu-sync
+              name: git-https # this is the new credential
+              namespace: tap-install
       default_parameters:
         supply_chain_service_account:
           secrets:
