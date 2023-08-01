@@ -70,7 +70,7 @@ tap_install:
 Fill in the client ID/secret you generated, and then we'll encrypt the new values.
 
 ```bash
-export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
+export SOPS_AGE_RECIPIENTS=$(age-keygen -y key.txt)
 sops --encrypt tap-sensitive-values.yaml > tap-sensitive-values.sops.yaml
 mv tap-sensitive-values.sops.yaml ../workshop-clusters/clusters/workshop/cluster-config/values
 ```

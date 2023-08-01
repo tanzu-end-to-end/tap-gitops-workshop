@@ -83,7 +83,8 @@ kubectl create secret docker-registry registry-credentials --docker-server=[My R
 Once you have input these values, we can SOPS-encrypt them:
 
 ```bash
-export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
+cd $WORKSHOP_ROOT/enc
+export SOPS_AGE_RECIPIENTS=$(age-keygen -y key.txt)
 sops --encrypt workshop-cluster-secrets.yaml > workshop-cluster-secrets.sops.yaml
 ```
 

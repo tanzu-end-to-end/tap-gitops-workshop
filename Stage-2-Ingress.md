@@ -41,7 +41,7 @@ This certificate file has sensitive private key data, so we need to encrypt it b
 
 ```bash
 cd $WORKSHOP_ROOT/enc
-export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
+export SOPS_AGE_RECIPIENTS=$(age-keygen -y key.txt)
 sops --encrypt certificate.yaml > certificate.sops.yaml
 ```
 
