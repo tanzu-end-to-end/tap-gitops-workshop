@@ -9,7 +9,7 @@ In the previous exercise, we managed the environment like an Iterate cluster, an
 kubectl delete workloads --all -n developer-ns
 ```
 
-Now, we can open `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/namespace-provisioner/desired-namespaces.yaml` and replace the developer namespace with a workload namespace:
+Now, we can open `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/namespace-provisioner/namespaces/desired-namespaces.yaml` and replace the developer namespace with a workload namespace:
 
 ```yaml
 #@data/values
