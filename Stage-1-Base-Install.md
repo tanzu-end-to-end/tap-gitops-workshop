@@ -10,6 +10,17 @@ Create a base working directory on your local machine for these workshop activit
 export WORKSHOP_ROOT=/path/to/my/basedir
 ```
 
+Because you will likely use multiple shells during this workshop, it is highly recommend to use `direnv` to set the `WORKSHOP_ROOT` variable. In the azure jump-server setup, the top-level `.envrc` file is in the home-directory.
+
+```bash
+# for azure jump-server users:
+# append workshop root to the home direnv config
+echo "export WORKSHOP_ROOT=$WORKSHOP_ROOT" >> ~/.envrc
+direnv allow
+```
+
+Now all SSH sessions to the jump-server will properly set the variable.
+
 ### (Optional) Authenticate to GitHub & Configure Git
 
 Create a [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and follow the commands below to authenticate and configure Git.
