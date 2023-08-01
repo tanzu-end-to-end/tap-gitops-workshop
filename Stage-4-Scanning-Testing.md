@@ -45,18 +45,20 @@ Now we will set up a supply chain appropriate for our build cluster. The default
       targetImagePullSecret: registry-credentials
 ```
 
-Next, let's configure the supply chain itself. Create an empty repo in your Github org called `tap-deliveries`. Add this declaration to your `tap-values.yaml`, but customize it for your environment:
+Next, let's configure the supply chain itself. Create an empty repo in your Github org called `tap-deliveries`. You can do this with:
+
+```bash
+cd $WORKSHOP_ROOT
+gh repo create
+```
+
+Add this declaration to your `tap-values.yaml`, but customize it for your environment:
 ```yaml
     ootb_supply_chain_testing_scanning:
-      registry:
-        server: # e.g. myregistry.azurecr.io/tap
-        repository: # e.g. tap/supply-chain
       gitops:
         ssh_secret: git-https
-        username: # github-org-name
         branch: main
         commit_message: "Update from TAP Supply Chain Choreographer"
-        email: # email@example.com
         server_address: https://github.com/
         repository_owner: # github-account
         repository_name: tap-deliveries
@@ -84,6 +86,12 @@ Let's commit the changes to our GitOps repo, causing them to sync to our cluster
 cd $WORKSHOP_ROOT/workshop-clusters
 git add . && git commit -m "Added scanning and testing supply chain"
 git push -u origin main
+```
+
+Once the workload has been created, you can either view it in The Tanzu Developer Portal (formerly known as TAP GUI) or by running the following command:
+
+```bash
+tanzu apps workload tail tanzu-java-web-app --namespace workload-ns --timestamp --since 1h
 ```
 
 ## [Next Stage: Customize TAP Developer Portal>>](Stage-5-Customize-TDP.md)
