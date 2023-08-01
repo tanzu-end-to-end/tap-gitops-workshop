@@ -45,7 +45,12 @@ git config --global credential.helper cache
 
 Here we will create the GitOps repo that records the configuration of your TAP install. All updates to the platform will be made to this repo, which will then propagate out to your installed environment.
 
-First, download the base template for your repo from TanzuNet. Go the [latest release page for Tanzu Application Platform](https://network.tanzu.vmware.com/products/tanzu-application-platform/#/releases/1346010), and download `tanzu-gitops-ri-0.2.5.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT.
+First, download the base template for your repo from TanzuNet. Go the [latest release page for Tanzu Application Platform](https://network.tanzu.vmware.com/products/tanzu-application-platform/#/releases/1346010), and download `tanzu-gitops-ri-0.2.5.tgz` to your local machine. Copy the tgz file to $WORKSHOP_ROOT. An alternative is to use the pivnet CLI to download it with the following command:
+
+```bash
+cd $WORKSHOP_ROOT
+pivnet download-product-files --product-slug='tanzu-application-platform' --release-version='1.6.1' --product-file-id=1549358
+```
 
 Initialize the Git repo on your local machine:
 
