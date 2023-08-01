@@ -76,6 +76,15 @@ The repo we have created can store the configuration for **all** of your TAP clu
 
 The `sops` argument indicates that we will be using SOPS Secret Management (with Age encryption) to securely store the secrets that are needed to configure our cluster.
 
+```bash
+git add .
+git status
+```
+
+```bash
+git commit -m 'Generate workshop cluster'
+```
+
 :bulb: **TIP:** We're going to be spending a lot of time adding, editng, and commiting files in this repo. It's recommended that you bring up the `workshop-clusters` directory as a project in a Git-aware, YAML-aware editor such as Visual Studio Code or IntelliJ. This will make it easy to navigate, edit, and commit.
 
 ### Create a starter configuration for your cluster
@@ -143,7 +152,7 @@ OK, we've got our cluster configuration the way we want it. Let's commit to Git,
 
 ```bash
 cd $WORKSHOP_ROOT/workshop-clusters
-git add . && git commit -m "Add workshop cluster"
+git add . && git commit -m "Configure workshop cluster encryption, domain, and credentials"
 git push -u origin main 
 
 cd clusters/workshop
