@@ -46,11 +46,15 @@ git init -b main
 git add . && git commit -m "Initialize Tanzu GitOps RI"
 ```
 
+It is important that we name this control repo "`workshop-clusters`" to simplify our YAML configurations and commands.
+
 Now push the local repo to Github, where your cluster can access it. If you have the Github CLI installed, you can do this with:
 
 ```bash
-gh repo create
+gh repo create --source . --push --private
 ```
+
+This repo does not need to be private, but it's good hygiene.
 
 The repo we have created can store the configuration for **all** of your TAP clusters. Each cluster will have its own subfolder in the GitOps repo where its configuration is stored. Let's create the cluster subfolder for `workshop`, which will be the name of our workshop cluster.
 
