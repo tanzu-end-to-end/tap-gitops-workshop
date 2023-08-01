@@ -28,6 +28,10 @@ Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/wor
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
         url: https://github.com/<MY-REPO>/workshop-clusters.git
+        secretRef:
+          name: sync-git
+          namespace: tanzu-sync
+          create_export: true
 ```
 
 This points the namespace provisioner at your desired namespaces document, so that it will begin syncing against your namespace list.
@@ -79,7 +83,8 @@ kubectl create secret docker-registry registry-credentials --docker-server=[My R
 Once you have input these values, we can SOPS-encrypt them:
 
 ```bash
-export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
+cd $WORKSHOP_ROOT/enc
+export SOPS_AGE_RECIPIENTS=$(age-keygen -y key.txt)
 sops --encrypt workshop-cluster-secrets.yaml > workshop-cluster-secrets.sops.yaml
 ```
 
@@ -108,11 +113,18 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
         url: https://github.com/<MY-REPO>/workshop-clusters.git
+        secretRef:
+          name: sync-git
+          namespace: tanzu-sync
+          create_export: true        
       additional_sources:
         - git:
             ref: origin/main
             subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
             url: https://github.com/<MY-REPO>/workshop-clusters.git
+            secretRef:
+              name: sync-git
+              namespace: tanzu-sync
       default_parameters:
         supply_chain_service_account:
           secrets:
@@ -169,56 +181,5 @@ Change the string that is returned by the controller from `Greetings from Spring
 
 If you go back to the terminal window where Tilt is running, you will see that it picks up your changes, and patches the running container in your developer namespace in seconds. Reload your browser window at https://localhost:8080, and you will see the result of your code changes.
 
-## Hints
-
-After completing the above instructions, your resulting `tap-values.yaml` should look similar to this:
-
-```yaml
----
-tap_install:
-  values:
-    profile: full
-
-    shared:
-      ingress_domain: <MY-INGRESS-DOMAIN>.com # Wildcard DNS Domain (e.g. tap.myexample.com)
-      image_registry:
-        project_path: tapgitopsxxxxx.azurecr.io/tap/tap-images # Image registry project path (e.g. harbor.myexample.com/tap/tap-images)
-        username: tapgitopsxxxxx # Registry username
-
-      kubernetes_version: 1.25.6 # Kubernetes version (e.g. 1.25.9)
-
-    ceip_policy_disclosed: true
-
-    # These packages will be deprecated in future versions of TAP, so we will exclude them to free up space on the cluster
-    excluded_packages:
-      - learningcenter.tanzu.vmware.com
-      - workshops.learningcenter.tanzu.vmware.com
-      - eventing.tanzu.vmware.com
-
-    namespace_provisioner:
-      controller: false
-      sync_period: 30s
-      gitops_install:
-        ref: origin/main
-        subPath: clusters/workshop/cluster-config/namespace-provisioner
-        url: https://github.com/<MY-REPO>/workshop-clusters.git
-      additional_sources:
-        - git:
-            ref: origin/main
-            subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
-            url: https://github.com/cpage-pivotal/workshop-clusters.git
-      default_parameters:
-        supply_chain_service_account:
-          secrets:
-            - git-https
-
-    local_source_proxy:
-      repository: <MY_REGISTRY_PROJECT_PATH>/tap-source-proxy
-      push_secret:
-        name: lsp-push-credentials
-        namespace: tap-install
-        create_export: true
-
-```
 
 ## [Next Stage: Enable the Scanning and Testing Supply Chain>>](Stage-4-Scanning-Testing.md)

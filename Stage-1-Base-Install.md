@@ -93,7 +93,7 @@ cd $WORKSHOP_ROOT
 mkdir enc
 cd enc
 age-keygen -o key.txt
-export SOPS_AGE_RECIPIENTS=$(cat key.txt | grep "# public key: " | sed 's/# public key: //')
+export SOPS_AGE_RECIPIENTS=$(age-keygen -y key.txt)
 export SOPS_AGE_KEY=$(cat key.txt)
 
 cp ../tap-gitops-workshop/templates/install/tanzu-sync-values.yaml .
