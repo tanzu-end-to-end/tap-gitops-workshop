@@ -23,6 +23,8 @@ rm .githubtoken
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 
+gh auth setup-git
+
 # temporarily remembers git creds in memory
 git config --global credential.helper cache
 ```

@@ -18,4 +18,6 @@ if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
 
   # validate auth token has required scopes
   gh auth status
+  # setup credential helpers
+  gh auth setup-git
 fi
