@@ -11,7 +11,7 @@ spec:
   fetch:
     - git:
         ref: origin/main
-        url: https://github.com/<MY-GITHUB-ORG>/workshop-clusters
+        url: https://github.com/<GITHUB-ACCOUNT>/workshop-clusters
         subPath: clusters/workshop/cluster-config/dependent-resources
   template:
     - sops:

@@ -58,7 +58,7 @@ Next, let's configure the supply chain itself. Create an empty repo in your Gith
         commit_message: "Update from TAP Supply Chain Choreographer"
         email: # email@example.com
         server_address: https://github.com/
-        repository_owner: # github-org-name
+        repository_owner: # github-account
         repository_name: tap-deliveries
 ```
 
