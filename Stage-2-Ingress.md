@@ -59,7 +59,7 @@ We will copy some additional resources we want to deploy into this general folde
 cp tap-gitops-workshop/templates/ingress/* workshop-clusters/clusters/workshop/cluster-config/config/general
 ```
 
-Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file. Set the `shared.ingress_domain` field to your wildcard domain, and update your `cnrs` configuration so that your workloads will be assigned a DNS name inside the wildcard domain:
+Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/values/tap-values.yaml` file. Set the `shared.ingress_domain` field to your wildcard domain, update your `cnrs` configuration so that your workloads will be assigned a DNS name inside the wildcard domain, and point `tap_gui` at the TLS certificate we installed:
 ```yaml
     shared:
       ingress_domain: workshopx.tap-pilot.com
