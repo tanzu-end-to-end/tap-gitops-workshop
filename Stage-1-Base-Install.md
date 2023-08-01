@@ -29,6 +29,7 @@ Create a [GitHub personal access token](https://docs.github.com/en/authenticatio
 touch .githubtoken
 vim .githubtoken # save GitHub auth token into the file
 gh auth login --with-token <.githubtoken
+gh auth status
 rm .githubtoken
 
 git config --global user.email "you@example.com"
