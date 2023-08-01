@@ -46,19 +46,19 @@ Required value if `git_auth_via_ssh_key` is false
 1. Run `terraform init`
 1. Run `terraform plan`
 1. Run `terraform apply -auto-approve`
-1. The SSH information and ACR admin information will be outputted. The ACR password can be retrived with the following command:
-```
-terraform output -raw azure_container_registry_password
-```
 
 ## Infrastructure Information
 
 During the installation of this workshop, some infrastructure information will be required. To obtain it, run the following commands to get AKS and ACR information.
 
 ```console
+# SSH information, ACR and AKS info
 terraform output
+```
 
-terraform output -raw azure_container_registry_password
+```console
+# ACR admin password
+terraform output azure_container_registry_password
 ```
 
 ### Jumpbox
