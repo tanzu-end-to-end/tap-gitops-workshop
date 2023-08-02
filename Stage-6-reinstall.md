@@ -46,7 +46,7 @@ Let's commit the changes to our GitOps repo, causing them to sync to our cluster
 
 ```bash
 cd $WORKSHOP_ROOT/workshop-clusters
-git add . && git commit -m "Added scanning and testing supply chain"
+git add . && git commit -m "Create dependent resources that wait for pkgi"
 git push -u origin main
 ```
 
