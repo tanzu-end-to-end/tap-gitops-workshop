@@ -49,8 +49,10 @@ Next, let's configure the supply chain itself. Create an empty repo in your Gith
 
 ```bash
 cd $WORKSHOP_ROOT
-gh repo create
+gh repo create tap-deliveries --private
 ```
+
+This repo does not need to be private, but it's good hygiene.
 
 Add this declaration to your `tap-values.yaml`, but customize it for your environment:
 ```yaml
