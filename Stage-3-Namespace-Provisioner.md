@@ -29,7 +29,7 @@ Add the following section to your `$WORKSHOP_ROOT/workshop-clusters/clusters/wor
       gitops_install:
         ref: origin/main
         subPath: clusters/workshop/cluster-config/namespace-provisioner/namespaces
-        url: https://github.com/<MY-REPO>/workshop-clusters.git
+        url: https://github.com/<GITHUB-ACCOUNT>/workshop-clusters.git
         secretRef:
           name: sync-git
           namespace: tanzu-sync
@@ -115,7 +115,7 @@ Update your `$WORKSHOP_ROOT/workshop-clusters/clusters/workshop/cluster-config/v
       additional_sources:
         # additional sources points to the resources we want to fill those namespaces with
         - git:
-            url: https://github.com/<MY_GH_USER>/workshop-clusters.git
+            url: https://github.com/<GITHUB-ACCOUNT>/workshop-clusters.git
             ref: origin/main
             subPath: clusters/workshop/cluster-config/namespace-provisioner/namespace-resources
             secretRef:
