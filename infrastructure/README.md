@@ -11,6 +11,8 @@ In order to get started quickly, Azure infrastructure (e.g. Azure Kubernetes Ser
 - SSH Key
 - Git provider account (e.g. GitHub, Bitbucket)
   - GitHub personal access token (optional)
+- Azure Quota Increases:
+  - AKS cluster requires at least 12 vCPUs of `Standard DSv3 Family vCPUs`
 
 Additionally, you will need to accept any Tanzu Application Platform EULAs.
 
