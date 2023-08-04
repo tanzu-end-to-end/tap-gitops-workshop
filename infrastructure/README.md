@@ -95,7 +95,7 @@ You may need to add your public key in your [GitHub account settings](https://gi
 
 During the setup of the jumpbox, [Cloud-init](https://cloudinit.readthedocs.io/) is utilized. Terraform will wait until this process is complete.
 
-### Debugging Cloud-init
+### Troubleshooting
 
 If for some reason Cloud-init fails, SSH into the jump server. You can run some of the commands below to help troubleshoot the issue.
 
@@ -111,4 +111,10 @@ sudo cat /var/log/cloud-init-output.log
 
 # Verify errors in the runcmd script
 sudo vim /var/lib/cloud/instance/scripts/runcmd
+```
+
+Additionally, if you need to recreate the jumpbox, the Terraform command below will save some time by only recreating it:
+
+```bash
+terraform apply -auto-approve -replace="azurerm_linux_virtual_machine.jump-server-vm"
 ```
