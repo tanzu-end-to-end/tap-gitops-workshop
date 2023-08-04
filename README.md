@@ -32,7 +32,7 @@ gh auth status
 tanzu version # should be v0.25 at least
 
 # Tanzu CLI plugins check; reinstall via "tanzu plugin install --group vmware-tap/default:v1.6.1"
-tanzu plugins list
+tanzu plugin list
 ```
 
 ### Workshop Stages
