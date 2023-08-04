@@ -13,12 +13,6 @@ users:
 write_files:
   - encoding: b64
     owner: ${username}:${username}
-    content: ${ssh_private_key}
-    path: /home/${username}/.ssh/priv_key
-    permissions: "0600"
-    defer: true
-  - encoding: b64
-    owner: ${username}:${username}
     content: ${kubeconfig}
     path: /home/${username}/.kube/config
     defer: true
@@ -46,16 +40,27 @@ runcmd:
     EOM
   - |
     su - ${username} << EOM
-      TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}" \
-        TANZU_REGISTRY_USERNAME="${tanzu_registry_username}" \
-        TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}" \
-        /usr/local/bin/tap-gitops-workshop-scripts/install-tanzu.sh
+      export GH_USERNAME="${gh_username}"
+      export GH_TOKEN="${gh_token}"
+
+      export TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}"
+      export TANZU_REGISTRY_USERNAME="${tanzu_registry_username}"
+      export TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}"
+
+      /usr/local/bin/tap-gitops-workshop-scripts/install-tanzu.sh
+      /usr/local/bin/tap-gitops-workshop-scripts/login-gh.sh
     EOM
   - |
     su - ${username} << EOM
-      GIT_AUTH_VIA_SSH_KEY=${git_auth_via_ssh_key} \
-        GH_USERNAME="${gh_username}" \
-        GH_TOKEN="${gh_token}" \
-        SSH_PRIVATE_KEY_PASSPHRASE_PROTECTED=${ssh_private_key_passphrase_protected} \
-        /usr/local/bin/tap-gitops-workshop-scripts/login-gh.sh
+      # NOTE: left aligned exports on purpose because of the heredoc
+      cat <<EOF > ~/.envrc
+    export GH_USERNAME="${gh_username}"
+    export GH_TOKEN="${gh_token}"
+
+    export TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}"
+    export TANZU_REGISTRY_USERNAME="${tanzu_registry_username}"
+    export TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}"
+    EOF
+
+      direnv allow
     EOM

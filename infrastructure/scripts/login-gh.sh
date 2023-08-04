@@ -4,20 +4,11 @@ shopt -s nocasematch
 
 echo " === login-gh.sh === "
 
-if [[ "$GIT_AUTH_VIA_SSH_KEY" != true ]]; then
-  # remove private keys since user opted into GitHub Auth
-  if [[ -f ~/.ssh/priv_key ]]; then
-    shred ~/.ssh/priv_key
-    rm ~/.ssh/priv_key
-  fi
+# validate auth token has required scopes via $GH_TOKEN env var
+# gh auth login will exit code 1 if run (https://github.com/cli/cli/issues/7008)
+gh auth status
 
-  # use GitHub token for git auth via the environment
-  echo "export GH_USERNAME=\"$GH_USERNAME\"" >> .envrc
-  echo "export GH_TOKEN=\"$GH_TOKEN\"" >> .envrc
-  direnv allow
+git config --global user.name "$GH_USERNAME"
 
-  # validate auth token has required scopes
-  gh auth status
-  # setup credential helpers
-  gh auth setup-git
-fi
+# setup credential helpers
+gh auth setup-git

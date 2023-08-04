@@ -15,31 +15,11 @@ Because you will likely use multiple shells during this workshop, it is highly r
 ```bash
 # for azure jump-server users:
 # append workshop root to the home direnv config
-echo "export WORKSHOP_ROOT=$WORKSHOP_ROOT" >> ~/.envrc
+echo export WORKSHOP_ROOT=\"$WORKSHOP_ROOT\" >> ~/.envrc
 direnv allow
 ```
 
 Now all SSH sessions to the jump-server will properly set the variable.
-
-### (Optional) Authenticate to GitHub & Configure Git
-
-Create a [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and follow the commands below to authenticate and configure Git.
-
-```bash
-touch .githubtoken
-vim .githubtoken # save GitHub auth token into the file
-gh auth login --with-token <.githubtoken
-gh auth status
-rm .githubtoken
-
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
-
-gh auth setup-git
-
-# temporarily remembers git creds in memory
-git config --global credential.helper cache
-```
 
 ### Initialize your platform GitOps repo
 

@@ -18,25 +18,22 @@ Additionally, you will need to accept any Tanzu Application Platform EULAs.
 
 Utilizing Terraform conventions, make a copy `terraform.tfvars.example` and remove the `.example` extension. Edit this file and add values. Descriptions of the values below:
 
-- `git_auth_via_ssh_key` (bool) - On whether to utilize git authentication via SSH keys (true) or personal access tokens (false)
 - `tanzu_network_refresh_token` (string) - The Tanzu network refresh token utilized to download software
 - `ssh_private_key_path` (string) - The path to the private key.  
-Used to SSH into the jumpbox.  
-Also used for git authentication if `git_auth_via_ssh_key` is set to true.  
+Used to SSH into the jumpbox.
     
-  **NOTE:** For Azure, you must use an RSA SSH key, and it's recommended that your key indicate your desired SSH username (not email) or you may have validation issues with the azure terraform module.  
+  **NOTE:** For Azure, you must use an RSA SSH key, and it's recommended that your key indicate your desired SSH username (not email) or you may have validation issues with the Azure terraform module.  
   If you need to generate a new key, here's an example that will create a new keypair in your current directory:
+
   ```shell
   ssh-keygen -m PEM -t rsa -b 4096 -f "./azure-workshop-ssh" -C "$USER"
   ```
 - `ssh_private_key_passphrase_protected` (bool) - On whether the SSH key has a passphrase (true) or not (false)
-- `ssh_public_key_path` (string) - The path to the public SSH key. Used in the setup of the jumpbox and must be manually setup on a Git provider account if `git_auth_via_ssh_key` is set to true
+- `ssh_public_key_path` (string) - The path to the public SSH key. Used in the setup of the jumpbox.
 - `ssh_username` (string) - The name used when SSH'ing into the jumpbox
 
-- `gh_username` (string) - Username of the GitHub account.  
-Required value if `git_auth_via_ssh_key` is false
-- `gh_token` (string) - Value of the GitHub personal access token.  
-Required value if `git_auth_via_ssh_key` is false  
+- `gh_username` (string) - Username of the GitHub account.
+- `gh_token` (string) - Value of the GitHub personal access token.
     
   **NOTE:** If you choose to use a GitHub Personal Access Token, the minimum required scopes for the `gh` CLI are `repo` (all) and `read:org`. You can add scopes for your tokens in the [GitHub Token Settings](https://github.com/settings/tokens/).
 
@@ -76,20 +73,10 @@ The jumpbox contains a variety of tools as well as the kubeconfig for the AKS cl
 - kubectl
 - Mozilla sops
 - pivnet (Tanzu Network CLI)
+- tree
 - yq
 
-After the tools are installed, automatic login into the Tanzu Network and GitHub, if GitHub personal access token are being utilized, will occur. Next, TAP GitOps reference implementation and this repo will be cloned. Finally, the Tanzu CLI will be downloaded and installed as well as Cluster Essentials onto the AKS cluster.
-
-After SSH'ing into the jumpbox, if `git_auth_via_ssh_key` is set to true, the following commands will need to be executed in order to use the SSH key for git authentication:
-
-```console
-  eval $(ssh-agent -s)
-  ssh-add ~/.ssh/priv_key
-```
-
-**NOTE:** the jumpbox SSH keys and git provider SSH keys are the same
-
-You may need to add your public key in your [GitHub account settings](https://github.com/settings/keys) if you generated a new key specifically for this workshop.
+After the tools are installed, automatic login into the Tanzu Network and GitHub will occur. Finally, the Tanzu CLI will be downloaded and installed as well as Cluster Essentials onto the AKS cluster.
 
 ## Cloud-init
 

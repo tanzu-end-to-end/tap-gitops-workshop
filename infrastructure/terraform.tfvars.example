@@ -1,4 +1,3 @@
-git_auth_via_ssh_key                 = true
 tanzu_network_refresh_token          = ""
 tanzu_registry_username              = ""
 tanzu_registry_password              = ""

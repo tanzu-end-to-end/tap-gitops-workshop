@@ -13,12 +13,10 @@ resource "azurerm_linux_virtual_machine" "jump-server-vm" {
     tanzu_registry_password              = var.tanzu_registry_password
     tanzu_network_refresh_token          = var.tanzu_network_refresh_token
     ssh_public_key                       = file(var.ssh_public_key_path)
-    git_auth_via_ssh_key                 = var.git_auth_via_ssh_key
     ssh_private_key                      = base64encode(file(var.ssh_private_key_path))
-    ssh_private_key_passphrase_protected = var.ssh_private_key_passphrase_protected
     kubeconfig                           = base64encode(azurerm_kubernetes_cluster.aks.kube_config_raw)
-    install_tools_script                 = base64encode(file("./scripts/install-tools.sh"))
     install_tanzu_script                 = base64encode(file("./scripts/install-tanzu.sh"))
+    install_tools_script                 = base64encode(file("./scripts/install-tools.sh"))
     login_gh_script                      = base64encode(file("./scripts/login-gh.sh"))
     tap_version                          = base64encode(file("./scripts/tap-version.yaml"))
   }))

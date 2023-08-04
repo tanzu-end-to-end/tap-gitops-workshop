@@ -6,10 +6,6 @@ variable "gh_token" {
   type = string
 }
 
-variable "git_auth_via_ssh_key" {
-  type = bool
-}
-
 variable "tanzu_registry_username" {
   type = string
 }
