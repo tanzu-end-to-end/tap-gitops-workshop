@@ -39,11 +39,12 @@ tar -xvf /tmp/$CLUSTER_ESSENTIALS_PRODUCT_FILE -C /tmp/tanzu-cluster-essentials
 )
 
 # Download and install Tanzu CLI
+# NOTE: this is not done via a package manager since it creates a .config dir with restrictive permissions and can interfere with direnv
 TAP_VERSION=$(yq e .tap.version $TAP_VERSION_YAML)
 
-TANZU_CLI_PRODUCT_FILE='tanzu-framework-linux-amd64-*.tar'
+TANZU_CLI_PRODUCT_FILE='tanzu-cli-linux-amd64.tar.gz'
 TANZU_CLI_PRODUCT_FILE_ID=$(yq e .tap.tanzu_cli.tanzu_net.linux_product_file_id $TAP_VERSION_YAML)
-TANZU_CLI='tanzu-core-linux_amd64'
+TANZU_CLI='tanzu-cli-linux_amd64'
 
 rm -f /tmp/$TANZU_CLI_PRODUCT_FILE
 rm -rf /tmp/tanzu
@@ -57,11 +58,12 @@ pivnet download-product-files \
 
 tar -xvf /tmp/$TANZU_CLI_PRODUCT_FILE -C /tmp/tanzu
 
-export TANZU_CLI_NO_INIT=true
-sudo install /tmp/tanzu/cli/core/v*/$TANZU_CLI /usr/local/bin/tanzu
+sudo install /tmp/tanzu/v*/$TANZU_CLI /usr/local/bin/tanzu
 
 tanzu version
 
-tanzu plugin install --local /tmp/tanzu/cli all
+tanzu config eula accept
+
+tanzu plugin install --group vmware-tap/default:v$TAP_VERSION
 
 tanzu plugin list

@@ -1,8 +1,8 @@
 tap:
-  version: "1.6.0-rc.18"
+  version: "1.6.1"
   tanzu_cli:
     tanzu_net:
-      linux_product_file_id: 1494394
+      linux_product_file_id: 1539749
 cluster_essentials:
   version: "1.6.0"
   bundle: "registry.tanzu.vmware.com/tanzu-cluster-essentials/cluster-essentials-bundle@sha256:54e516b5d088198558d23cababb3f907cd8073892cacfb2496bb9d66886efe15"
