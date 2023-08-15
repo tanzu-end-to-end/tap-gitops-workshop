@@ -29,10 +29,10 @@ pivnet eulas
 gh auth status
 
 # Tanzu CLI installed check
-tanzu version # should be v0.25 at least
+tanzu version # should be v0.90 at least
 
 # Tanzu CLI plugins check; reinstall via "tanzu plugin install --group vmware-tap/default:v1.6.1"
-tanzu plugins list
+tanzu plugin list
 ```
 
 ### Workshop Stages
