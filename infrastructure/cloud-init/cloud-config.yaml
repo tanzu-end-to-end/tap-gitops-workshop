@@ -17,6 +17,10 @@ write_files:
     path: /home/${username}/.kube/config
     defer: true
   - encoding: b64
+    content: ${configure_vm_script}
+    path: /usr/local/bin/tap-gitops-workshop-scripts/configure-vm.sh
+    permissions: "0755"
+  - encoding: b64
     content: ${install_tools_script}
     path: /usr/local/bin/tap-gitops-workshop-scripts/install-tools.sh
     permissions: "0755"
@@ -34,33 +38,4 @@ write_files:
     permissions: "0755"
 
 runcmd:
-  - |
-    su - ${username} << EOM
-      /usr/local/bin/tap-gitops-workshop-scripts/install-tools.sh
-    EOM
-  - |
-    su - ${username} << EOM
-      export GH_USERNAME="${gh_username}"
-      export GH_TOKEN="${gh_token}"
-
-      export TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}"
-      export TANZU_REGISTRY_USERNAME="${tanzu_registry_username}"
-      export TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}"
-
-      /usr/local/bin/tap-gitops-workshop-scripts/install-tanzu.sh
-      /usr/local/bin/tap-gitops-workshop-scripts/login-gh.sh
-    EOM
-  - |
-    su - ${username} << EOM
-      # NOTE: left aligned exports on purpose because of the heredoc
-      cat <<EOF > ~/.envrc
-    export GH_USERNAME="${gh_username}"
-    export GH_TOKEN="${gh_token}"
-
-    export TANZU_NETWORK_REFRESH_TOKEN="${tanzu_network_refresh_token}"
-    export TANZU_REGISTRY_USERNAME="${tanzu_registry_username}"
-    export TANZU_REGISTRY_PASSWORD="${tanzu_registry_password}"
-    EOF
-
-      direnv allow
-    EOM
+  - su -l ${username} -c '/usr/local/bin/tap-gitops-workshop-scripts/configure-vm.sh "${gh_username}" "${gh_token}" "${tanzu_network_refresh_token}" "${tanzu_registry_username}" "${tanzu_registry_password}"'

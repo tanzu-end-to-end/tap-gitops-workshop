@@ -15,6 +15,7 @@ resource "azurerm_linux_virtual_machine" "jump-server-vm" {
     ssh_public_key                       = file(var.ssh_public_key_path)
     ssh_private_key                      = base64encode(file(var.ssh_private_key_path))
     kubeconfig                           = base64encode(azurerm_kubernetes_cluster.aks.kube_config_raw)
+    configure_vm_script                  = base64encode(file("./scripts/configure-vm.sh"))
     install_tanzu_script                 = base64encode(file("./scripts/install-tanzu.sh"))
     install_tools_script                 = base64encode(file("./scripts/install-tools.sh"))
     login_gh_script                      = base64encode(file("./scripts/login-gh.sh"))
