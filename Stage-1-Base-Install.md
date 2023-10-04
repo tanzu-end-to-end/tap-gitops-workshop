@@ -4,7 +4,7 @@ In stage 1, we will perform a minimal install of a single-cluster TAP environmen
 
 ### Working Directory Structure
 
-![alt text](https://github.com/Tanzu-Solutions-Engineering/tap-gitops-workshop/blob/deepak/folder-structure.png)
+![alt text](/folder-structure.png)
 
 
 ### Base working directory
