@@ -2,6 +2,11 @@
 
 In stage 1, we will perform a minimal install of a single-cluster TAP environment using the [full profile](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/install-online-profile.html#full-profile-3). This initial configuration won't be especially useful by itself, but it will provide a baseline that allows us to easily add the capabilities we want to the platform.
 
+### Working Directory Structure
+
+![alt text](https://github.com/Tanzu-Solutions-Engineering/tap-gitops-workshop/blob/deepak/folder-structure.png)
+
+
 ### Base working directory
 
 Create a base working directory on your local machine for these workshop activities. Assign that directory path to the environment variable WORKSHOP_ROOT
