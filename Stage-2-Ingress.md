@@ -32,6 +32,12 @@ mkdir $WORKSHOP_ROOT/certificates
 ```
 Go to the spreadsheet, and download the certificate (fullchain.pem) and the private key (privkey.pem) in columns B and C for your domain. Copy these 2 files into the `certificates` directory you created.
 
+*Tip*: If you don't have access to the excel and you want to use self-signed certificates with your own domain, you can run the following command (replace `my.example.com` with your real domain):
+
+```bash
+openssl req -x509 -nodes -newkey rsa:2048 -keyout workshopx-privkey.pen -out fullchain.pem -days 365 -subj "/CN=*.my.example.com
+```
+
 Now, let's create a secret for this certificate that can be installed onto our cluster. Be sure to replace the filenames in this command with the filenames of your certificate files.
 ```bash
 cd $WORKSHOP_ROOT/certificates
