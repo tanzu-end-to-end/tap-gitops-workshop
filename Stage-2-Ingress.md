@@ -89,6 +89,14 @@ git add . && git commit -m "Add TLS Ingress"
 git push -u origin main
 ```
 
+## Tip:
+
+If you don't want to wait for the sync polling interval, you can trigger the sync directly using:
+
+```bash
+kctrl app kick -n tanzu-sync -a sync --yes
+```
+
 ### Access TAP GUI Via The Browser
 
 From your browser, navigate to [https://tap-gui.<ingress_domain>](https://tap-gui.<ingress_domain>) and verify you can see the TAP GUI.
